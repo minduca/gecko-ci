@@ -1,0 +1,10 @@
+{
+    "name": "gecko",
+    "version": "1.0.0",
+    "description": "gecko",
+    "main": "server.js",
+    "author": {
+        "name": "Arthur",
+        "email": "arthur.minduca@gmail.com"
+    }
+}
