@@ -9,10 +9,12 @@ class Server {
         let config = this.loadConfig();
 
         let gecko = GeckoFactory.createGecko(config);
-        gecko.watchBuilds("gecko");
+        gecko.watchBuilds("gecko-ci");
+
+        this.createServer();
     }
 
-    public createServer() {
+    private createServer() {
 
         http.createServer(function (req, res) {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -37,4 +39,3 @@ class Server {
 
 let server = new Server();
 server.init();
-server.createServer();

@@ -4,7 +4,9 @@ let config: App.IAppConfiguration = {
     tfs: {
         collection: "DefaultCollection",
         protocol: "https",
-        serverInstance: "minduca.visualstudio.com"
+        serverInstance: "minduca.visualstudio.com",
+        user: "",
+        personalToken: ""
     }
 }
 
