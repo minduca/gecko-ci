@@ -5,7 +5,7 @@ declare namespace TFS {
         get<T>(options: TFS.ITfsApiGetArgs, resultParser?: (result: any) => T): Promise<T>
     }
 
-    export interface ITfsApiGetArgs {
+    interface ITfsApiGetArgs {
         teamProject?: string;
         area?: string;
         resource: string;
@@ -14,7 +14,7 @@ declare namespace TFS {
     }
 
     //https://www.visualstudio.com/en-us/docs/integrate/api/build/builds
-    export interface ITfsApiGetBuildOptions {
+    interface ITfsApiGetBuildOptions {
         definitions?: string;            //A comma-delimited list of definition IDs.
         queues?: string;                 //A comma-delimited list of queue IDs.
         buildNumber?: string;            //Filters to builds with build numbers that start with this value.
@@ -32,7 +32,7 @@ declare namespace TFS {
         continuationToken?: string;      //A continuation token for paging through builds
     }
 
-    export interface ITfsConfiguration {
+    interface ITfsConfiguration {
         serverInstance?: string;
         collection?: string;
         protocol?: string;
@@ -40,7 +40,7 @@ declare namespace TFS {
         personalToken?: string;
     }
 
-    export interface ITfsTeamProject {
+    interface ITfsTeamProject {
         id: string;
         name: string;
         description: string;
@@ -49,12 +49,12 @@ declare namespace TFS {
         revision: number;
     }
 
-    export interface ITFSList<T> {
+    interface ITFSList<T> {
         count: number;
         value: T[];
     }
 
-    export interface ITfsBuildDefinition {
+    interface ITfsBuildDefinition {
         path: string;
         type: string;
         revision: number;
@@ -64,7 +64,7 @@ declare namespace TFS {
         project: ITfsTeamProject;
     }
 
-    export interface ITfsUser {
+    interface ITfsUser {
         id: string;
         displayName: string;
         uniqueName: string;
@@ -73,7 +73,7 @@ declare namespace TFS {
         isContainer: boolean;
     }
 
-    export interface ITfsBuild {
+    interface ITfsBuild {
         _links: {
             self: { href: string; }
             web: { href: string; }

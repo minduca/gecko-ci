@@ -35,7 +35,7 @@ export class Cardiologist {
     }
 }
 
-export interface IHeartBeatOptions {
+interface IHeartBeatOptions {
     key: string;
     intervalMilliseconds: number;
     action: () => void;

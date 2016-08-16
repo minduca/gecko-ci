@@ -32,7 +32,7 @@ declare namespace App {
         tfs: TFS.ITfsConfiguration;
     }
 
-    export interface IBuildMonitor {
+    interface IBuildMonitor {
         watchBuilds(options: IWatchBuildOptions): void;
         stopWatchingBuilds(project?: string): void;
     }
