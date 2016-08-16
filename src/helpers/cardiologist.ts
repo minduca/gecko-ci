@@ -26,10 +26,12 @@ export class Cardiologist {
 
     public stopAll(): void {
 
-        let obj = this;
         Object.keys(this.timersDictionary).forEach(function (key) {
-            obj.stopHeartBeat(key);
-        });
+
+            let self: Cardiologist = this;
+            self.stopHeartBeat(key);
+
+        }.bind(this));
     }
 }
 

@@ -5,18 +5,19 @@ export class Gecko {
 
     public watchBuilds(project: string): void {
 
-        let obj = this;
         this.buildMonitor.watchBuilds({
             project: project,
             buildResultChanged: function (build: App.IBuild) {
-                obj.notifyBuildStatus(build);
-            }
+
+                let self: Gecko = this;
+                self.notifyBuildStatus(build);
+
+            }.bind(this)
         });
     }
 
     private notifyBuildStatus(build: App.IBuild): void {
-
-        let x = 0;
+        //TODO
     }
 
     public stopMonitoringBuilds(project?: string) {

@@ -7,7 +7,6 @@ export class TfsRestClient implements TFS.ITfsRestClient {
     public get<T>(options: TFS.ITfsApiGetArgs, resultParser?: (result: any) => T): Promise<T> {
 
         let url = this.buildUrl(options);
-        let obj = this;
         let supportedProtocols = ["http", "https"];
 
         if (!url.protocol || supportedProtocols.indexOf(url.protocol) == -1) {
@@ -23,7 +22,6 @@ export class TfsRestClient implements TFS.ITfsRestClient {
             let req = http.request({
                 hostname: url.hostname,
                 path: url.path,
-                //auth: credentialsBase64,
                 method: "GET",
                 headers: {
                     "Content-type": "application/json",
@@ -58,18 +56,6 @@ export class TfsRestClient implements TFS.ITfsRestClient {
 
             req.end();
         });
-
-        //    $.ajax({
-        //    url: url,
-        //    type: "GET",
-        //    headers: {
-        //        "Content-type": "application/json"
-        //    },
-        //    beforeSend: function (xhr: JQueryXHR) {
-        //        let credentialsBase64 = btoa(obj.connection.user + ":" + obj.connection.personalToken);
-        //        xhr.setRequestHeader("Authorization", "Basic " + credentialsBase64);
-        //    }
-        //});
     }
 
     private buildUrl(options: TFS.ITfsApiGetArgs): {

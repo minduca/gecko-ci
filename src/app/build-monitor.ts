@@ -12,14 +12,15 @@ export class BuildMonitor implements App.IBuildMonitor {
 
     public watchBuilds(options: App.IWatchBuildOptions): void {
 
-        let obj = this;
-
         this.cardiologist.startHeartBeat({
             intervalMilliseconds: 30000,
             key: options.project,
             action: function () {
-                obj.searchBuilds(options);
-            },
+
+                let self: BuildMonitor = this;
+                self.searchBuilds(options);
+
+            }.bind(this),
             executeOnRegister: this.lastBuild == undefined
         });
     }
@@ -34,8 +35,6 @@ export class BuildMonitor implements App.IBuildMonitor {
 
     private searchBuilds(options: App.IWatchBuildOptions): void {
 
-        let obj = this;
-
         this.builds.getBuilds({
             projectName: options.project,
             $top: 5
@@ -44,11 +43,12 @@ export class BuildMonitor implements App.IBuildMonitor {
 
                 if (builds && builds.length > 0) {
 
-                    let previousBuild = obj.lastBuild;
+                    let self: BuildMonitor = this;
+                    let previousBuild = self.lastBuild;
                     let lastBuild = builds[0];
                     let isNewBuild = !previousBuild || lastBuild.id != previousBuild.id;
 
-                    obj.lastBuild = lastBuild;
+                    self.lastBuild = lastBuild;
 
                     if (isNewBuild) {
 
@@ -61,6 +61,6 @@ export class BuildMonitor implements App.IBuildMonitor {
                             options.buildResultChanged(lastBuild);
                     }
                 }
-            });
+            }.bind(this));
     }
 }
