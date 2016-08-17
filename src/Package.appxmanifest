@@ -12,7 +12,7 @@
   <Properties>
     <DisplayName>gecko</DisplayName>
     <PublisherDisplayName>Arthur</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>images\StoreLogo.png</Logo>
   </Properties>
 
   <Resources>
@@ -29,12 +29,12 @@
         DisplayName="nodeuwp"
         Description="nodeuwp"
         BackgroundColor="transparent"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
+        Square150x150Logo="images\Square150x150Logo.png"
+        Square44x44Logo="images\Square44x44Logo.png"
         AppListEntry="none">
 
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\splashscreen.png" />
+        <uap:DefaultTile Wide310x150Logo="images\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="images\splashscreen.png" />
 
       </uap:VisualElements>
       <Extensions>
