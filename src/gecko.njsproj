@@ -56,7 +56,7 @@
     <Content Include="typings\globals\node\typings.json" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="package.appxmanifest">
+    <AppxManifest Include="package_TEMP.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="images\LockScreenLogo.scale-200.png" />
