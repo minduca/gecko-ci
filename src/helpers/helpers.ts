@@ -39,3 +39,25 @@ export class ObjectHelper {
         return destination;
     }
 }
+
+export class ArrayHelper {
+
+    public static indexOf<T>(array: T[], expr?: (T) => boolean): number {
+
+        var result = -1;
+        for (var i = 0; i < array.length; i++) {
+
+            if (!expr || expr(array[i])) {
+                result = i;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static firstOrDefault<T>(array: T[], expr?: (T) => boolean): T {
+
+        var index = ArrayHelper.indexOf(array, expr);
+        return index >= 0 ? array[index] : undefined;
+    }
+}

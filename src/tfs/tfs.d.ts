@@ -22,7 +22,7 @@ declare namespace TFS {
         minFinishTime?: Date;            //Builds that finished after this time.
         maxFinishTime?: Date;            //Builds that finished before this time.
         requestedFor?: string;           //Builds requested by this user. Alias of the user.fabrikamfiber4@hotmail.com, for example.
-        reasonFilter?: string;           //The reason the build was created.
+        reasonFilter?: CteBuildReasons | "all";     //The reason the build was created.
         resultFilter?: string;           //The build result
         statusFilter?: string;           //The build status.
         tagFilters?: string;             //A comma-delimited list of tags. Only builds with these tags will be returned.
@@ -31,6 +31,8 @@ declare namespace TFS {
         $top?: number;                   //Maximum number of builds to return.
         continuationToken?: string;      //A continuation token for paging through builds
     }
+
+    type CteBuildReasons = "manual" | "individualCI" | "batchedCI" | "schedule" | "userCreated" | "validateShelveset" | "checkInShelveset" | "triggered";
 
     interface ITfsConfiguration {
         serverInstance?: string;

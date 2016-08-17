@@ -6,7 +6,9 @@ export class TfsBuildServices implements App.IBuildServices {
     public getBuilds(options: App.IGetBuildOptions): Promise<App.IBuild[]> {
 
         return this.get(options.projectName, {
-            $top: options.$top
+            $top: options.$top,
+            statusFilter: options.statusFilter ? options.statusFilter.join(",") : undefined,
+            resultFilter: options.resultFilter ? options.resultFilter.join(",") : undefined
         });
     }
 

@@ -1,9 +1,10 @@
 ﻿import {Cardiologist} from "../helpers/cardiologist"
+import {ArrayHelper} from "../helpers/helpers"
 
 //Technology agnostic build monitor
 export class BuildMonitor implements App.IBuildMonitor {
 
-    private lastBuild: App.IBuild;
+    private lastBuildCompleted: App.IBuild;
     private cardiologist: Cardiologist;
 
     constructor(private builds: App.IBuildServices) {
@@ -18,10 +19,10 @@ export class BuildMonitor implements App.IBuildMonitor {
             action: function () {
 
                 let self: BuildMonitor = this;
-                self.searchBuilds(options);
+                self.notifyNewBuilds(options);
 
             }.bind(this),
-            executeOnRegister: this.lastBuild == undefined
+            executeOnRegister: this.lastBuildCompleted == undefined
         });
     }
 
@@ -33,34 +34,84 @@ export class BuildMonitor implements App.IBuildMonitor {
             this.cardiologist.stopAll();
     }
 
-    private searchBuilds(options: App.IWatchBuildOptions): void {
+    private notifyNewBuilds(options: App.IWatchBuildOptions): void {
 
         this.builds.getBuilds({
             projectName: options.project,
-            $top: 5
+            $top: 1,
+            statusFilter: ["completed"],
+            resultFilter: ["succeeded", "partiallySucceeded", "failed"]
         }).then(
             function (builds: App.IBuild[]) {
 
-                if (builds && builds.length > 0) {
+                let self: BuildMonitor = this;
+                let info = self.extractInfo(builds);
 
-                    let self: BuildMonitor = this;
-                    let previousBuild = self.lastBuild;
-                    let lastBuild = builds[0];
-                    let isNewBuild = !previousBuild || lastBuild.id != previousBuild.id;
+                if (info.lastBuildCompleted) {
 
-                    self.lastBuild = lastBuild;
+                    switch (info.lastBuildCompleted.result) {
+                        case "succeeded":
+                            {
+                                if (options.buildSucceeded) {
+                                    options.buildSucceeded(info.lastBuildCompleted);
+                                }
+                                break;
+                            }
+                        case "partiallySucceeded":
+                            {
+                                if (options.buildPartiallySucceeded) {
+                                    options.buildPartiallySucceeded(info.lastBuildCompleted);
+                                }
+                                break;
+                            }
+                        case "failed":
+                            {
+                                if (options.buildFailed) {
+                                    options.buildFailed(info.lastBuildCompleted);
+                                }
+                                break;
+                            }
+                    }
 
-                    if (isNewBuild) {
+                    if (info.resultChanged && options.buildResultChanged) {
+                        options.buildResultChanged(info.lastBuildCompleted);
+                    }
 
-                        if (options.buildComplete)
-                            options.buildComplete(lastBuild);
-
-                        let isNewResult = !previousBuild || previousBuild.result != lastBuild.result;
-
-                        if (isNewResult && options.buildResultChanged)
-                            options.buildResultChanged(lastBuild);
+                    if (options.buildCompleted) {
+                        options.buildCompleted(info.lastBuildCompleted);
                     }
                 }
+
             }.bind(this));
     }
+
+    private extractInfo(builds: App.IBuild[]): IBuildResultInfo {
+
+        let info: IBuildResultInfo = {};
+
+        if (builds && builds.length > 0) {
+
+            let indexLastCompleted = ArrayHelper.indexOf(builds, (b: App.IBuild) =>
+                b.result != undefined && b.result != "canceled" && b.status == "completed");
+
+            if (indexLastCompleted >= 0) {
+
+                let lastBuild = builds[indexLastCompleted];
+                let isNewBuild = !this.lastBuildCompleted || this.lastBuildCompleted.id != lastBuild.id || this.lastBuildCompleted.lastChangedDate != lastBuild.lastChangedDate;
+
+                if (isNewBuild) {
+                    info.lastBuildCompleted = lastBuild;
+                    info.resultChanged = !this.lastBuildCompleted || this.lastBuildCompleted.result != lastBuild.result;
+                    this.lastBuildCompleted = lastBuild;
+                }
+            }
+        }
+
+        return info;
+    }
+}
+
+interface IBuildResultInfo {
+    lastBuildCompleted?: App.IBuild;
+    resultChanged?: boolean
 }
