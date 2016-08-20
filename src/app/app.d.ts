@@ -11,7 +11,6 @@ declare namespace App {
     }
 
     interface IGetBuildOptions {
-        projectName: string;            //Project name
         $top: number;                   //Maximum number of builds to return.
         statusFilter?: CteBuildStatus[];          //The build status.
         resultFilter?: CteBuildResultStatus[];    //The build result
@@ -32,7 +31,6 @@ declare namespace App {
     type CteBuildResultStatus = "succeeded" | "partiallySucceeded" | "failed" | "canceled";
 
     interface IWatchBuildOptions {
-        project: string;
         buildResultChanged?: (build: IBuild) => void;
         buildCompleted?: (build: IBuild) => void;
         buildSucceeded?: (build: IBuild) => void;
@@ -41,11 +39,27 @@ declare namespace App {
     }
 
     interface IAppConfiguration {
-        tfs: TFS.ITfsConfiguration;
+        connections: {
+            tfs: {
+                [name: string]: TFS.ITfsConnection
+            };
+        },
+        buildsToWatch?: {
+            tfs: {
+                [name: string]: TFS.ITfsBuildWatchOptions
+            };
+        }
     }
 
     interface IBuildMonitor {
         watchBuilds(options: IWatchBuildOptions): void;
-        stopWatchingBuilds(project?: string): void;
+        stopWatchingBuilds(): void;
+    }
+
+    interface IGeckoFactoryOptions {
+        config: IAppConfiguration;
+        buildServicefactories: {
+            [technology: string]: (connection: any, buildConfig: any) => App.IBuildServices
+        }
     }
 }

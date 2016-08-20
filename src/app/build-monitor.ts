@@ -15,7 +15,6 @@ export class BuildMonitor implements App.IBuildMonitor {
 
         this.cardiologist.startHeartBeat({
             intervalMilliseconds: 30000,
-            key: options.project,
             action: function () {
 
                 let self: BuildMonitor = this;
@@ -26,18 +25,14 @@ export class BuildMonitor implements App.IBuildMonitor {
         });
     }
 
-    public stopWatchingBuilds(project?: string): void {
+    public stopWatchingBuilds(): void {
 
-        if (project)
-            this.cardiologist.stopHeartBeat(project);
-        else
-            this.cardiologist.stopAll();
+        this.cardiologist.stopAll();
     }
 
     private notifyNewBuilds(options: App.IWatchBuildOptions): void {
 
         this.builds.getBuilds({
-            projectName: options.project,
             $top: 1,
             statusFilter: ["completed"],
             resultFilter: ["succeeded", "partiallySucceeded", "failed"]

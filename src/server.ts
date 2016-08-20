@@ -1,15 +1,27 @@
 ﻿import {GeckoFactory} from "./app/gecko-factory"
 import {ObjectHelper} from "./helpers/helpers"
+import {TfsRestClient} from "./tfs/tfs-rest-client"
+import {TfsBuildServices} from "./tfs/tfs-build-services"
+
 let http = require('http');
 
 class Server {
 
     public init(): void {
 
-        let config = this.loadConfig();
+        let config: App.IAppConfiguration = this.loadConfig();
 
-        let gecko = GeckoFactory.createGecko(config);
-        gecko.watchBuilds("gecko-ci");
+        let gecko = GeckoFactory.createGecko({
+            config: config,
+            buildServicefactories: {
+                "tfs": (connection: TFS.ITfsConnection, buildConfig: TFS.ITfsBuildWatchOptions): App.IBuildServices => {
+                    let restClient = new TfsRestClient(connection);
+                    return new TfsBuildServices(restClient, buildConfig);
+                }
+            }
+        });
+
+        gecko.watchBuilds();
 
         this.createServer();
     }
@@ -18,7 +30,7 @@ class Server {
 
         http.createServer(function (req, res) {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Hello World\n');
+            res.end('Gecko\n');
         }).listen(1337);
     }
 

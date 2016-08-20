@@ -3,16 +3,20 @@ export class Cardiologist {
 
     private timersDictionary: { [timerKey: string]: NodeJS.Timer } = {};
 
-    public startHeartBeat(options: IHeartBeatOptions): void {
+    public startHeartBeat(options: IHeartBeatOptions): string {
 
-        this.stopHeartBeat(options.key);
+        let key = options.key ? options.key : Object.keys(this.timersDictionary).length.toString();
+
+        this.stopHeartBeat(key);
 
         let timerId = setInterval(options.action, options.intervalMilliseconds);
-        this.timersDictionary[options.key] = timerId;
+        this.timersDictionary[key] = timerId;
 
         if (options.executeOnRegister) {
             options.action();
         }
+
+        return key;
     }
 
     public stopHeartBeat(key: string) {
@@ -36,7 +40,7 @@ export class Cardiologist {
 }
 
 interface IHeartBeatOptions {
-    key: string;
+    key?: string;
     intervalMilliseconds: number;
     action: () => void;
     executeOnRegister?: boolean;

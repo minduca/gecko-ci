@@ -1,11 +1,11 @@
 ﻿//TFS build services
 export class TfsBuildServices implements App.IBuildServices {
 
-    constructor(private tfs: TFS.ITfsRestClient) { }
+    constructor(private tfs: TFS.ITfsRestClient, private config: TFS.ITfsBuildWatchOptions) { }
 
     public getBuilds(options: App.IGetBuildOptions): Promise<App.IBuild[]> {
 
-        return this.get(options.projectName, {
+        return this.get(this.config.teamProject, {
             $top: options.$top,
             statusFilter: options.statusFilter ? options.statusFilter.join(",") : undefined,
             resultFilter: options.resultFilter ? options.resultFilter.join(",") : undefined
@@ -16,7 +16,7 @@ export class TfsBuildServices implements App.IBuildServices {
 
         let parseResult = (data) => {
 
-            let tfsBuilds: TFS.ITFSList<TFS.ITfsBuild> = data.value;
+            let tfsBuilds: TFS.ITfsList<TFS.ITfsBuild> = data.value;
             let appBuilds: App.IBuild[] = <any>tfsBuilds; //for the sake of self documentation
             return appBuilds;
         }

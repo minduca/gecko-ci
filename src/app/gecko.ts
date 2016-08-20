@@ -1,26 +1,27 @@
 ﻿
 export class Gecko {
 
-    constructor(private buildMonitor: App.IBuildMonitor) { }
+    constructor(private buildMonitors: App.IBuildMonitor[]) { }
 
-    public watchBuilds(project: string): void {
+    public watchBuilds(): void {
 
-        this.buildMonitor.watchBuilds({
-            project: project,
-            buildResultChanged: function (build: App.IBuild) {
+        this.buildMonitors.forEach((monitor) => {
+            monitor.watchBuilds({
+                buildResultChanged: function (build: App.IBuild) {
 
-                let self: Gecko = this;
-                self.notifyBuildStatus(build);
+                    let self: Gecko = this;
+                    self.notifyBuildStatus(build);
 
-            }.bind(this)
-        });
+                }.bind(this)
+            })
+        }, this);
     }
 
     private notifyBuildStatus(build: App.IBuild): void {
         //TODO
     }
 
-    public stopMonitoringBuilds(project?: string) {
-        this.buildMonitor.stopWatchingBuilds(project);
+    public stopMonitoringBuilds() {
+        this.buildMonitors.forEach((monitor) => monitor.stopWatchingBuilds());
     }
 }

@@ -2,7 +2,7 @@
 
 export class TfsRestClient implements TFS.ITfsRestClient {
 
-    constructor(private _connection: TFS.ITfsConfiguration) { }
+    constructor(private _connection: TFS.ITfsConnection) { }
 
     public get<T>(options: TFS.ITfsApiGetArgs, resultParser?: (result: any) => T): Promise<T> {
 
