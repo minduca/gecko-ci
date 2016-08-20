@@ -38,19 +38,6 @@ declare namespace App {
         buildFailed?: (build: IBuild) => void;
     }
 
-    interface IAppConfiguration {
-        connections: {
-            tfs: {
-                [name: string]: TFS.ITfsConnection
-            };
-        },
-        buildsToWatch?: {
-            tfs: {
-                [name: string]: TFS.ITfsBuildWatchOptions
-            };
-        }
-    }
-
     interface IBuildMonitor {
         watchBuilds(options: IWatchBuildOptions): void;
         stopWatchingBuilds(): void;
@@ -61,5 +48,9 @@ declare namespace App {
         buildServicefactories: {
             [technology: string]: (connection: any, buildConfig: any) => App.IBuildServices
         }
+    }
+
+    interface IBuildLamp {
+
     }
 }

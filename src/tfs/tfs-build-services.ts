@@ -1,15 +1,19 @@
-﻿//TFS build services
+﻿import {ObjectHelper} from "../helpers/helpers"
+
+//TFS build services
 export class TfsBuildServices implements App.IBuildServices {
 
-    constructor(private tfs: TFS.ITfsRestClient, private config: TFS.ITfsBuildWatchOptions) { }
+    constructor(private tfs: TFS.ITfsRestClient, private config: TFS.ITfsBuildServiceOptions) { }
 
     public getBuilds(options: App.IGetBuildOptions): Promise<App.IBuild[]> {
 
-        return this.get(this.config.teamProject, {
+        let optionsFull = ObjectHelper.merge(this.config, {
             $top: options.$top,
             statusFilter: options.statusFilter ? options.statusFilter.join(",") : undefined,
             resultFilter: options.resultFilter ? options.resultFilter.join(",") : undefined
         });
+
+        return this.get(this.config.teamProject, optionsFull);
     }
 
     private get(teamProject: string, options?: TFS.ITfsApiGetBuildOptions): Promise<App.IBuild[]> {

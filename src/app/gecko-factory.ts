@@ -14,47 +14,47 @@ export class GeckoFactory {
         let monitors = new Array<BuildMonitor>();
         let config = options.config;
 
-        if (!config.buildsToWatch)
+        if (!config.connections)
+            throw "no connection was found";
+
+        if (!config.buildServices)
             throw "no build configuration was found";
 
+        if (!config.buildMonitors)
+            throw "no build monitor was found";
+
         if (!options.buildServicefactories)
-            throw "no build service factory was found"
+            throw "no build service factory was found";
 
-        Object.keys(config.buildsToWatch).forEach(technology => {
+        config.buildMonitors.forEach(monitorConfig => {
 
+            let technology = monitorConfig.buildTechnology;
             let factoryfn = options.buildServicefactories[technology];
 
-            if (factoryfn == undefined) {
+            if (!factoryfn)
                 throw "factory " + technology + " was not found";
-            }
 
-            this.forEachBuild(config.connections[technology], config.buildsToWatch[technology],
-                (connection, buildConfig): void => {
+            if (!config.connections[technology])
+                throw "no connection was found for " + technology;
 
-                    let buildServices = factoryfn(connection, buildConfig);
-                    let buildMonitor = new BuildMonitor(buildServices);
-                    monitors.push(buildMonitor);
-                });
+            if (!config.buildServices[technology])
+                throw "no build service was found for " + technology;
+
+            let connection = config.connections[technology][monitorConfig.connection];
+            let buildServiceConfig = config.buildServices[technology][monitorConfig.buildService];
+
+            if (!connection)
+                throw "no connection was found for " + technology + " with name \"" + monitorConfig.connection + "\"";
+
+            if (!buildServiceConfig)
+                throw "no build service was found for " + technology + " with name \"" + monitorConfig.connection + "\"";
+
+            let buildServices = factoryfn(connection, buildServiceConfig);
+            let buildMonitor = new BuildMonitor(buildServices);
+
+            monitors.push(buildMonitor);
         });
 
         return monitors;
-    }
-
-    private static forEachBuild(connections: { [name: string]: any },
-        buildsToWatch: { [name: string]: any }, callbackfn: (connection: any, buildConfig: any) => void): void {
-
-        if (buildsToWatch != undefined) {
-
-            Object.keys(buildsToWatch).forEach(buildName => {
-
-                let buildConfig = buildsToWatch[buildName];
-                let connection = connections[buildConfig.connection];
-
-                if (!connection)
-                    throw "connection " + buildConfig.connection + " was not found";
-
-                callbackfn(connection, buildConfig);
-            });
-        }
     }
 }

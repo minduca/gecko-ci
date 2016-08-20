@@ -1,6 +1,6 @@
-﻿/// <reference path="app/app.d.ts" />
+﻿/// <reference path="config.d.ts" />
 
-let config: App.IAppConfiguration = {
+let config: IAppConfiguration = {
     connections: {
         tfs: {
             "default connection": {
@@ -12,14 +12,28 @@ let config: App.IAppConfiguration = {
             }
         }
     },
-    buildsToWatch: {
+    buildServices: {
         tfs: {
             "gecko-ci build": {
-                teamProject: "gecko-ci",
-                connection: "default connection"
+                teamProject: "gecko-ci"
             }
         }
-    }
+    },
+    lightBulbs: {
+        lifx: {
+            "default bulb": {
+                //TODO
+            }
+        }
+    },
+    buildMonitors: [
+        {
+            buildTechnology: "tfs",
+            buildService: "gecko-ci build",
+            connection: "default connection",
+            lightBulbs: ["default bulb"]
+        }
+    ]
 }
 
 export = config

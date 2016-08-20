@@ -83,10 +83,12 @@
     <TypeScriptCompile Include="app\build-monitor.ts" />
     <TypeScriptCompile Include="app\gecko-factory.ts" />
     <TypeScriptCompile Include="app\gecko.ts" />
+    <TypeScriptCompile Include="config.d.ts" />
     <TypeScriptCompile Include="config.user.ts" />
     <TypeScriptCompile Include="config.ts" />
     <TypeScriptCompile Include="helpers\cardiologist.ts" />
     <TypeScriptCompile Include="helpers\helpers.ts" />
+    <TypeScriptCompile Include="lighting\lifx.d.ts" />
     <TypeScriptCompile Include="server.ts" />
     <TypeScriptCompile Include="tfs\tfs-build-services.ts" />
     <TypeScriptCompile Include="tfs\tfs-rest-client.ts" />

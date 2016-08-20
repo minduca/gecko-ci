@@ -9,12 +9,12 @@ class Server {
 
     public init(): void {
 
-        let config: App.IAppConfiguration = this.loadConfig();
+        let config: IAppConfiguration = this.loadConfig();
 
         let gecko = GeckoFactory.createGecko({
             config: config,
             buildServicefactories: {
-                "tfs": (connection: TFS.ITfsConnection, buildConfig: TFS.ITfsBuildWatchOptions): App.IBuildServices => {
+                "tfs": (connection: TFS.ITfsConnection, buildConfig: TFS.ITfsBuildServiceOptions): App.IBuildServices => {
                     let restClient = new TfsRestClient(connection);
                     return new TfsBuildServices(restClient, buildConfig);
                 }
@@ -34,9 +34,9 @@ class Server {
         }).listen(1337);
     }
 
-    private loadConfig(): App.IAppConfiguration {
-        let config: App.IAppConfiguration = require("./config");
-        let userConfig: App.IAppConfiguration;
+    private loadConfig(): IAppConfiguration {
+        let config: IAppConfiguration = require("./config");
+        let userConfig: IAppConfiguration;
         let result = config;
 
         try {

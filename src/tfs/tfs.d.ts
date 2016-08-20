@@ -45,8 +45,7 @@ declare namespace TFS {
         personalToken?: string;
     }
 
-    interface ITfsBuildWatchOptions extends ITfsBuildDefinitionOptions {
-        connection: string; //Connection name
+    interface ITfsBuildServiceOptions extends ITfsBuildDefinitionOptions {
         teamProject: string;   //Team project
     }
 
