@@ -1,27 +1,36 @@
 ﻿
 export class Gecko {
 
-    constructor(private buildMonitors: App.IBuildMonitor[]) { }
+    constructor(private monitors: App.IMonitorDevicesPair[]) { }
 
     public watchBuilds(): void {
 
-        this.buildMonitors.forEach((monitor) => {
-            monitor.watchBuilds({
-                buildResultChanged: function (build: App.IBuild) {
+        this.monitors.forEach((monitor) => {
 
-                    let self: Gecko = this;
-                    self.notifyBuildStatus(build);
+            let forEachLight = (callbackfn: (lamp: App.IBuildLamp) => void) => {
+                if (monitor.lights && monitor.lights.length > 0)
+                    monitor.lights.forEach(callbackfn)
+            }
 
-                }.bind(this)
-            })
+            monitor.build.watchBuilds({
+                buildSucceeded: function (build: App.IBuild) {
+
+                    forEachLight(light => light.displayBuildSucceededStatus());
+                },
+                buildPartiallySucceeded: function (build: App.IBuild) {
+
+                    forEachLight(light => light.displayBuildPartiallySucceededStatus());
+                },
+                buildFailed: function (build: App.IBuild) {
+
+                    forEachLight(light => light.buildFailedStatus());
+                },
+            });
+
         }, this);
     }
 
-    private notifyBuildStatus(build: App.IBuild): void {
-        //TODO
-    }
-
     public stopMonitoringBuilds() {
-        this.buildMonitors.forEach((monitor) => monitor.stopWatchingBuilds());
+        this.monitors.forEach((monitor) => monitor.build.stopWatchingBuilds());
     }
 }

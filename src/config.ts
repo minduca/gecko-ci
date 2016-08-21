@@ -12,28 +12,19 @@ let config: IAppConfiguration = {
             }
         }
     },
-    buildServices: {
+    buildMonitors: {
         tfs: {
             "gecko-ci build": {
-                teamProject: "gecko-ci"
+                teamProject: "gecko-ci",
+                connection: "default connection"
             }
         }
     },
     lightBulbs: {
         lifx: {
-            "default bulb": {
-                //TODO
-            }
+            
         }
-    },
-    buildMonitors: [
-        {
-            buildTechnology: "tfs",
-            buildService: "gecko-ci build",
-            connection: "default connection",
-            lightBulbs: ["default bulb"]
-        }
-    ]
+    }
 }
 
 export = config

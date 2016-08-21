@@ -46,6 +46,7 @@ declare namespace TFS {
     }
 
     interface ITfsBuildServiceOptions extends ITfsBuildDefinitionOptions {
+        connection: string; //Connection name
         teamProject: string;   //Team project
     }
 

@@ -7,7 +7,7 @@ interface IAppConfiguration {
             [name: string]: TFS.ITfsConnection
         };
     },
-    buildServices?: {
+    buildMonitors?: {
         tfs: {
             [name: string]: TFS.ITfsBuildServiceOptions
         };
@@ -17,7 +17,6 @@ interface IAppConfiguration {
             [name: string]: LIFX.ILifxConnection
         }
     }
-    buildMonitors?: IBuildMonitorConfig[]
 }
 
 interface IBuildMonitorConfig {

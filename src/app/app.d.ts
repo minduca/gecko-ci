@@ -2,10 +2,6 @@
 
 declare namespace App {
 
-    interface IGeckoOptions {
-        project: string;
-    }
-
     interface IBuildServices {
         getBuilds(options: IGetBuildOptions): Promise<IBuild[]>
     }
@@ -43,14 +39,21 @@ declare namespace App {
         stopWatchingBuilds(): void;
     }
 
+    interface IMonitorDevicesPair {
+        build: App.IBuildMonitor;
+        lights: App.IBuildLamp[]
+    }
+
     interface IGeckoFactoryOptions {
         config: IAppConfiguration;
-        buildServicefactories: {
+        buildServicefactories?: {
             [technology: string]: (connection: any, buildConfig: any) => App.IBuildServices
         }
     }
 
     interface IBuildLamp {
-
+        displayBuildSucceededStatus: () => void;
+        displayBuildPartiallySucceededStatus: () => void;
+        buildFailedStatus: () => void;
     }
 }

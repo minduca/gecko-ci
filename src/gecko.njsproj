@@ -81,7 +81,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\app.d.ts" />
     <TypeScriptCompile Include="app\build-monitor.ts" />
-    <TypeScriptCompile Include="app\gecko-factory.ts" />
+    <TypeScriptCompile Include="app\factories.ts" />
     <TypeScriptCompile Include="app\gecko.ts" />
     <TypeScriptCompile Include="config.d.ts" />
     <TypeScriptCompile Include="config.user.ts" />

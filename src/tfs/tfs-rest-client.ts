@@ -2,7 +2,7 @@
 
 export class TfsRestClient implements TFS.ITfsRestClient {
 
-    constructor(private _connection: TFS.ITfsConnection) { }
+    constructor(private connection: TFS.ITfsConnection) { }
 
     public get<T>(options: TFS.ITfsApiGetArgs, resultParser?: (result: any) => T): Promise<T> {
 
@@ -15,7 +15,7 @@ export class TfsRestClient implements TFS.ITfsRestClient {
 
         let http = require(url.protocol)
 
-        let credentialsBase64 = new Buffer(this._connection.user + ":" + this._connection.personalToken).toString('base64');
+        let credentialsBase64 = new Buffer(this.connection.user + ":" + this.connection.personalToken).toString('base64');
 
         return new Promise<T>(function (resolve, reject) {
 
@@ -67,7 +67,7 @@ export class TfsRestClient implements TFS.ITfsRestClient {
 
         //Format : https://{instance}/{collection}/{team-project}/_apis/{area}/{resource}?api-version={version}
 
-        let pathBuilder = ["/", this._connection.collection];
+        let pathBuilder = ["/", this.connection.collection];
 
         if (options.teamProject) {
             pathBuilder.push("/" + options.teamProject);
@@ -86,14 +86,14 @@ export class TfsRestClient implements TFS.ITfsRestClient {
             pathBuilder.push("&" + UrlHelper.param(options.data));
         }
 
-        let protocol = this._connection.protocol;
+        let protocol = this.connection.protocol;
         if (protocol) {
             protocol = protocol.trim().toLowerCase();
         }
 
         return {
             protocol: protocol,
-            hostname: this._connection.serverInstance,
+            hostname: this.connection.serverInstance,
             port: 80,
             path: pathBuilder.join("")
         };
