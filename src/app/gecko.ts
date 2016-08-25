@@ -7,7 +7,7 @@ export class Gecko {
 
         this.monitors.forEach((monitor) => {
 
-            let forEachLight = (callbackfn: (lamp: App.IBuildLamp) => void) => {
+            let forEachLight = (callbackfn: (lamp: App.IBuildLightBulb) => void) => {
                 if (monitor.lights && monitor.lights.length > 0)
                     monitor.lights.forEach(callbackfn)
             }

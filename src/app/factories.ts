@@ -2,7 +2,7 @@
 import {BuildMonitor} from "./build-monitor"
 import {TfsRestClient} from "../tfs/tfs-rest-client"
 import {TfsBuildServices} from "../tfs/tfs-build-services"
-import {ObjectHelper} from "../helpers/helpers"
+import {ObjectHelper, ArrayHelper} from "../helpers/helpers"
 
 export class GeckoFactory {
 
@@ -11,44 +11,78 @@ export class GeckoFactory {
         options = GeckoFactory.mergeWithDefaultOptions(options);
 
         let buildMonitors = BuildMonitorsFactory.createBuildMonitors(options);
-        let monitors = GeckoFactory.createMonitorDevicesPairs(buildMonitors, options.config.lightBulbs);
+        let monitors = GeckoFactory.createMonitorDevicesPairs(buildMonitors, options);
 
         return new Gecko(monitors);
     }
 
     private static mergeWithDefaultOptions(options: App.IGeckoFactoryOptions): App.IGeckoFactoryOptions {
 
-        return ObjectHelper.merge({
+
+        let defaults: App.IGeckoFactoryOptions = {
             buildServicefactories: {
                 "tfs": (connection: TFS.ITfsConnection, buildConfig: TFS.ITfsBuildServiceOptions): App.IBuildServices => {
                     let restClient = new TfsRestClient(connection);
                     return new TfsBuildServices(restClient, buildConfig);
                 }
+            },
+            lightBulbfactories: {
+                "lifx": (connection: LIFX.ILifxConnection): App.IBuildLightBulb => {
+                    return undefined;
+                }
             }
-        }, options)
+        };
+
+        return ObjectHelper.merge(defaults, options)
     }
 
-    private static createMonitorDevicesPairs(buildMonitors: { [name: string]: BuildMonitor }, lightBulbsConfig): App.IMonitorDevicesPair[] {
+    private static createMonitorDevicesPairs(buildMonitors: { [name: string]: BuildMonitor }, options: App.IGeckoFactoryOptions): App.IMonitorDevicesPair[] {
 
+        let config = options.config;
         let monitors = new Array<App.IMonitorDevicesPair>();
 
-        let buildLightsDictionary: { [name: string]: any[] } = {};
+        if (!config.lightBulbs)
+            throw "no light bulb configuration was found";
 
-        if (lightBulbsConfig != undefined) {
+        if (!config.gecko || !config.gecko.lights)
+            throw "no device mapping was found";
 
-            //Object.keys(lightBulbsConfig).forEach(technology => {
+        if (!options.lightBulbfactories)
+            throw "no light bulb factory was found";
 
-            //    let bulbsConfig = lightBulbsConfig[technology];
-            //});
-        }
+        config.gecko.lights.forEach(map => {
 
-        Object.keys(buildMonitors).forEach(name => {
+            let build = buildMonitors[map.buildMonitorName];
 
-            monitors.push({
-                build: buildMonitors[name],
-                lights: buildLightsDictionary[name]
-            });
-        })
+            if (!build)
+                throw "build " + map.buildMonitorName + " was not found";
+
+            if (map.lightBulbsNames && map.lightBulbsNames.length > 0) {
+
+                let lights = new Array<App.IBuildLightBulb>();
+                map.lightBulbsNames.forEach(lightBulbName => {
+
+                    let lightBulbConfig = ArrayHelper.firstOrDefault(config.lightBulbs, bulb => bulb.name == lightBulbName);
+
+                    if (!lightBulbConfig)
+                        throw "light bulb " + lightBulbName + " was not found";
+
+                    let factoryfn = options.lightBulbfactories[lightBulbConfig.technology];
+
+                    if (!factoryfn)
+                        throw "factory " + lightBulbConfig.technology + " was not found";
+
+                    let lightBulb = factoryfn(lightBulbConfig);
+                    lights.push(lightBulb);
+                });
+                
+                monitors.push({
+                    build: build,
+                    lights: lights
+                });
+            }
+            
+        });
 
         return monitors;
     }
@@ -67,41 +101,25 @@ export class BuildMonitorsFactory {
         if (!options.buildServicefactories)
             throw "no build service factory was found"
 
-        Object.keys(config.buildMonitors).forEach(technology => {
+        config.buildMonitors.forEach(buildMonitorConfig => {
 
+            let technology = buildMonitorConfig.technology;
             let factoryfn = options.buildServicefactories[technology];
 
-            if (factoryfn == undefined) {
+            if (!factoryfn)
                 throw "factory " + technology + " was not found";
-            }
 
-            this.forEachBuild(config.connections[technology], config.buildMonitors[technology],
-                (connection, buildConfig, buildConfigName: string): void => {
+            let connection = ArrayHelper.firstOrDefault(config.connections, con => con.name == buildMonitorConfig.connection);
 
-                    let buildServices = factoryfn(connection, buildConfig);
-                    let buildMonitor = new BuildMonitor(buildServices);
-                    monitors[buildConfigName] = buildMonitor;
-                });
+            if (!connection)
+                throw "connection " + buildMonitorConfig.connection + " was not found";
+
+            let buildServices = factoryfn(connection, buildMonitorConfig);
+            let buildMonitor = new BuildMonitor(buildServices);
+            monitors[buildMonitorConfig.name] = buildMonitor;
+
         });
 
         return monitors;
-    }
-
-    private static forEachBuild(connections: { [name: string]: any },
-        buildsToWatch: { [name: string]: any }, callbackfn: (connection: any, buildConfig: any, buildConfigName: string) => void): void {
-
-        if (buildsToWatch != undefined) {
-
-            Object.keys(buildsToWatch).forEach(buildName => {
-
-                let buildConfig = buildsToWatch[buildName];
-                let connection = connections[buildConfig.connection];
-
-                if (!connection)
-                    throw "connection " + buildConfig.connection + " was not found";
-
-                callbackfn(connection, buildConfig, buildName);
-            });
-        }
     }
 }

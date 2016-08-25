@@ -1,29 +1,38 @@
 ﻿/// <reference path="config.d.ts" />
 
 let config: IAppConfiguration = {
-    connections: {
-        tfs: {
-            "default connection": {
-                collection: "DefaultCollection",
-                protocol: "https",
-                serverInstance: "minduca.visualstudio.com",
-                user: "",
-                personalToken: ""
+    connections: [
+        {
+            name: "default connection",
+            technology: "tfs",
+            collection: "DefaultCollection",
+            protocol: "https",
+            serverInstance: "minduca.visualstudio.com",
+            user: "",
+            personalToken: ""
+        }
+    ],
+    buildMonitors: [
+        {
+            name: "gecko-ci build",
+            technology: "tfs",
+            teamProject: "gecko-ci",
+            connection: "default connection"
+        }
+    ],
+    lightBulbs: [
+        {
+            name: "gecko-ci bulb",
+            technology: "lifx"
+        }
+    ],
+    gecko: {
+        lights: [
+            {
+                buildMonitorName: "gecko-ci build",
+                lightBulbsNames: ["gecko-ci bulb"]
             }
-        }
-    },
-    buildMonitors: {
-        tfs: {
-            "gecko-ci build": {
-                teamProject: "gecko-ci",
-                connection: "default connection"
-            }
-        }
-    },
-    lightBulbs: {
-        lifx: {
-            
-        }
+        ]
     }
 }
 

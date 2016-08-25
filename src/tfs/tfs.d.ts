@@ -38,6 +38,8 @@ declare namespace TFS {
     type CteBuildReasons = "manual" | "individualCI" | "batchedCI" | "schedule" | "userCreated" | "validateShelveset" | "checkInShelveset" | "triggered";
 
     interface ITfsConnection {
+        name: string;
+        technology: string;
         serverInstance?: string;
         collection?: string;
         protocol?: string;
@@ -46,6 +48,8 @@ declare namespace TFS {
     }
 
     interface ITfsBuildServiceOptions extends ITfsBuildDefinitionOptions {
+        name: string;
+        technology: string;
         connection: string; //Connection name
         teamProject: string;   //Team project
     }

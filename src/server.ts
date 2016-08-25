@@ -1,5 +1,5 @@
 ﻿import {GeckoFactory} from "./app/factories"
-import {ObjectHelper} from "./helpers/helpers"
+import {ObjectHelper, ArrayHelper} from "./helpers/helpers"
 
 let http = require('http');
 
@@ -28,14 +28,31 @@ class Server {
 
     private loadConfig(): IAppConfiguration {
         let config: IAppConfiguration = require("./config");
-        let userConfig: IAppConfiguration;
+        const userConfigFileName = "./config.user";
+
+        let userConfig: {
+            connections: ConnectionsConfig[]
+        };
+
         let result = config;
 
-        try {
-            userConfig = require("./config.user");
-            result = ObjectHelper.merge(config, userConfig);
+        if (config.connections && config.connections.length > 0) {
 
-        } catch (e) { }
+            try {
+                userConfig = require(userConfigFileName);
+            } catch (e) { }
+
+            if (userConfig && userConfig.connections) {
+
+                let dictionary = ArrayHelper.toDictionary(userConfig.connections, con => con.name);
+                config.connections.forEach((con, index, array) => {
+
+                    let userConnection = dictionary[con.name];
+                    if (userConnection)
+                        array[index] = ObjectHelper.merge(con, userConnection);
+                });
+            }
+        }
 
         return result;
     }

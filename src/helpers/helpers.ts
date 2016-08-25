@@ -42,7 +42,7 @@ export class ObjectHelper {
 
 export class ArrayHelper {
 
-    public static indexOf<T>(array: T[], expr?: (T) => boolean): number {
+    public static indexOf<T>(array: T[], expr?: (obj: T) => boolean): number {
 
         var result = -1;
         for (var i = 0; i < array.length; i++) {
@@ -55,9 +55,16 @@ export class ArrayHelper {
         return result;
     }
 
-    public static firstOrDefault<T>(array: T[], expr?: (T) => boolean): T {
+    public static firstOrDefault<T>(array: T[], expr?: (obj: T) => boolean): T {
 
         var index = ArrayHelper.indexOf(array, expr);
         return index >= 0 ? array[index] : undefined;
+    }
+
+    public static toDictionary<T>(array: T[], convert: (obj: T) => string): { [key: string]: T } {
+
+        let dictionary: { [key: string]: T } = {};
+        array.forEach(value => dictionary[convert(value)] = value);
+        return dictionary;
     }
 }
