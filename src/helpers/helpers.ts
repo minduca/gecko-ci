@@ -19,8 +19,6 @@ export class ObjectHelper {
          * @name merge
          * @author Mazhar Ahmed
          *
-         * this function will merge more than one json objects into one object
-         *
          */
          
         let destination = {},
