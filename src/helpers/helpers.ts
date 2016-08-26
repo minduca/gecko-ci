@@ -12,6 +12,17 @@ export class ObjectHelper {
 
     public static merge(defaultData, data): any {
 
+        /*
+         * CREDITS 
+         * https://gist.github.com/mazhar266/c9ba906002f1c74ba67d
+         * 
+         * @name merge
+         * @author Mazhar Ahmed
+         *
+         * this function will merge more than one json objects into one object
+         *
+         */
+         
         let destination = {},
             sources = [].slice.call(arguments, 0);
 
