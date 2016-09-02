@@ -40,9 +40,8 @@ declare namespace TFS {
     interface ITfsConnection {
         name: string;
         technology: string;
-        serverInstance?: string;
+        server?: string;
         collection?: string;
-        protocol?: string;
         user?: string;
         personalToken?: string;
     }

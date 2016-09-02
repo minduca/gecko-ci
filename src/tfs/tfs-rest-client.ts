@@ -1,25 +1,23 @@
 ﻿import {UrlHelper} from "../helpers/helpers"
+let urlapi = require("url");
 
 export class TfsRestClient implements TFS.ITfsRestClient {
+
+    private http;
 
     constructor(private connection: TFS.ITfsConnection) { }
 
     public get<T>(options: TFS.ITfsApiGetArgs, resultParser?: (result: any) => T): Promise<T> {
 
         let url = this.buildUrl(options);
-        let supportedProtocols = ["http", "https"];
 
-        if (!url.protocol || supportedProtocols.indexOf(url.protocol) == -1) {
-            throw "protocol " + url.protocol + " is not supported";
-        }
-
-        let http = require(url.protocol)
+        this.loadHttpModule(url.protocol);
 
         let credentialsBase64 = new Buffer(this.connection.user + ":" + this.connection.personalToken).toString('base64');
 
         return new Promise<T>(function (resolve, reject) {
 
-            let req = http.request({
+            let req = this.http.request({
                 hostname: url.hostname,
                 path: url.path,
                 method: "GET",
@@ -55,7 +53,8 @@ export class TfsRestClient implements TFS.ITfsRestClient {
             });
 
             req.end();
-        });
+
+        }.bind(this));
     }
 
     private buildUrl(options: TFS.ITfsApiGetArgs): {
@@ -86,16 +85,32 @@ export class TfsRestClient implements TFS.ITfsRestClient {
             pathBuilder.push("&" + UrlHelper.param(options.data));
         }
 
-        let protocol = this.connection.protocol;
+        let url = urlapi.parse(this.connection.server);
+
+        let protocol: string = url.protocol;
         if (protocol) {
-            protocol = protocol.trim().toLowerCase();
+            protocol = protocol.replace(":", "").trim().toLowerCase();
         }
 
         return {
             protocol: protocol,
-            hostname: this.connection.serverInstance,
-            port: 80,
+            hostname: url.hostname,
+            port: url.port,
             path: pathBuilder.join("")
         };
+    }
+
+    private loadHttpModule(protocol: string) {
+
+        if (!this.http) {
+
+            let supportedProtocols = ["http", "https"];
+
+            if (!protocol || supportedProtocols.indexOf(protocol) == -1) {
+                throw "protocol " + protocol + " is not supported";
+            }
+
+            this.http = require(protocol);
+        }
     }
 }

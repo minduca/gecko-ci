@@ -6,8 +6,7 @@ let config: IAppConfiguration = {
             name: "default connection",
             technology: "tfs",
             collection: "DefaultCollection",
-            protocol: "https",
-            serverInstance: "minduca.visualstudio.com",
+            server: "https://minduca.visualstudio.com/",
             user: "",
             personalToken: ""
         }
