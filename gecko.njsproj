@@ -61,6 +61,7 @@
     <AppxManifest Include="uwp\package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include=".npmignore" />
     <Content Include="uwp\images\LockScreenLogo.scale-200.png" />
     <Content Include="uwp\images\SplashScreen.scale-200.png" />
     <Content Include="uwp\images\Square150x150Logo.scale-200.png" />

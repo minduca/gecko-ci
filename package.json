@@ -1,7 +1,7 @@
 {
   "name": "gecko-ci",
   "version": "0.0.1",
-  "description": "a lightweight build monitor that handle IoT gadgets to bring CI feedbacks to the real world",
+  "description": "a lightweight build monitor for nodejs that handles IoT gadgets and brings CI feedbacks to the real world",
   "homepage": "https://github.com/minduca/gecko-ci",
   "main": "server.js",
   "author": {
@@ -19,5 +19,6 @@
     "url": "https://github.com/minduca/gecko-ci.git"
   },
   "bugs": "https://github.com/minduca/gecko-ci/issues",
+  "files": ["src"],
   "license": "GPL-3.0"
 }
