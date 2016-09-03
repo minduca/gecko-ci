@@ -1,10 +1,23 @@
 {
-    "name": "gecko",
-    "version": "1.0.0",
-    "description": "gecko",
-    "main": "server.js",
-    "author": {
-        "name": "Arthur",
-        "email": "arthur.minduca@gmail.com"
-    }
+  "name": "gecko-ci",
+  "version": "0.0.1",
+  "description": "a lightweight build monitor that handle IoT gadgets to bring CI feedbacks to the real world",
+  "homepage": "https://github.com/minduca/gecko-ci",
+  "main": "server.js",
+  "author": {
+    "name": "Arthur Minduca",
+    "email": "arthur.minduca@gmail.com",
+    "url": "https://arthurminduca.com/"
+  },
+  "keywords": [
+    "ci",
+    "iot",
+    "extreme feedback"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minduca/gecko-ci.git"
+  },
+  "bugs": "https://github.com/minduca/gecko-ci/issues",
+  "license": "GPL-3.0"
 }
