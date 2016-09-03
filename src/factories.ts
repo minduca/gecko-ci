@@ -1,8 +1,8 @@
 ﻿import {Gecko} from "./gecko"
 import {BuildMonitor} from "./build-monitor"
-import {TfsRestClient} from "../tfs/tfs-rest-client"
-import {TfsBuildServices} from "../tfs/tfs-build-services"
-import {ObjectHelper, ArrayHelper} from "../helpers/helpers"
+import {TfsRestClient} from "./tfs/tfs-rest-client"
+import {TfsBuildServices} from "./tfs/tfs-build-services"
+import {ObjectHelper, ArrayHelper} from "./helpers/helpers"
 
 export class GeckoFactory {
 

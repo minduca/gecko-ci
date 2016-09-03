@@ -17,7 +17,7 @@
     <ProjectGuid>8c9fe30f-234a-4f37-901c-ab9948b33f07</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>tst\server.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -49,51 +49,55 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="server.js" />
+    <Content Include=".gitignore" />
+    <Content Include="LICENSE.txt" />
     <Content Include="package.json" />
+    <Content Include="README.md" />
     <Content Include="tsconfig.json" />
     <Content Include="typings.json" />
     <Content Include="typings\globals\node\typings.json" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="package.appxmanifest">
+    <AppxManifest Include="uwp\package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="images\LockScreenLogo.scale-200.png" />
-    <Content Include="images\SplashScreen.scale-200.png" />
-    <Content Include="images\Square150x150Logo.scale-200.png" />
-    <Content Include="images\Square44x44Logo.scale-200.png" />
-    <Content Include="images\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="images\StoreLogo.png" />
-    <Content Include="images\Wide310x150Logo.scale-200.png" />
-    <None Include="gecko_TemporaryKey.pfx" />
+    <Content Include="uwp\images\LockScreenLogo.scale-200.png" />
+    <Content Include="uwp\images\SplashScreen.scale-200.png" />
+    <Content Include="uwp\images\Square150x150Logo.scale-200.png" />
+    <Content Include="uwp\images\Square44x44Logo.scale-200.png" />
+    <Content Include="uwp\images\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="uwp\images\StoreLogo.png" />
+    <Content Include="uwp\images\Wide310x150Logo.scale-200.png" />
+    <None Include="uwp\gecko_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\" />
-    <Folder Include="images\" />
-    <Folder Include="helpers\" />
-    <Folder Include="lighting\" />
-    <Folder Include="tfs\" />
+    <Folder Include="uwp\" />
+    <Folder Include="tst\" />
+    <Folder Include="uwp\images\" />
+    <Folder Include="src\helpers\" />
+    <Folder Include="src\lighting\" />
+    <Folder Include="src\" />
+    <Folder Include="src\tfs\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\node\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\app.d.ts" />
-    <TypeScriptCompile Include="app\build-monitor.ts" />
-    <TypeScriptCompile Include="app\factories.ts" />
-    <TypeScriptCompile Include="app\gecko.ts" />
-    <TypeScriptCompile Include="config.d.ts" />
-    <TypeScriptCompile Include="config.user.ts" />
-    <TypeScriptCompile Include="config.ts" />
-    <TypeScriptCompile Include="helpers\cardiologist.ts" />
-    <TypeScriptCompile Include="helpers\helpers.ts" />
-    <TypeScriptCompile Include="lighting\lifx.d.ts" />
-    <TypeScriptCompile Include="server.ts" />
-    <TypeScriptCompile Include="tfs\tfs-build-services.ts" />
-    <TypeScriptCompile Include="tfs\tfs-rest-client.ts" />
-    <TypeScriptCompile Include="tfs\tfs-teamproject-services.ts" />
-    <TypeScriptCompile Include="tfs\tfs.d.ts" />
+    <TypeScriptCompile Include="src\app.d.ts" />
+    <TypeScriptCompile Include="src\build-monitor.ts" />
+    <TypeScriptCompile Include="src\factories.ts" />
+    <TypeScriptCompile Include="src\gecko.ts" />
+    <TypeScriptCompile Include="src\config.d.ts" />
+    <TypeScriptCompile Include="tst\config.user.ts" />
+    <TypeScriptCompile Include="tst\config.ts" />
+    <TypeScriptCompile Include="src\helpers\cardiologist.ts" />
+    <TypeScriptCompile Include="src\helpers\helpers.ts" />
+    <TypeScriptCompile Include="src\lighting\lifx.d.ts" />
+    <TypeScriptCompile Include="tst\server.ts" />
+    <TypeScriptCompile Include="src\tfs\tfs-build-services.ts" />
+    <TypeScriptCompile Include="src\tfs\tfs-rest-client.ts" />
+    <TypeScriptCompile Include="src\tfs\tfs-teamproject-services.ts" />
+    <TypeScriptCompile Include="src\tfs\tfs.d.ts" />
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>

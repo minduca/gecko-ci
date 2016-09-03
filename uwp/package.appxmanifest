@@ -34,7 +34,7 @@
         AppListEntry="none">
 
         <uap:DefaultTile Wide310x150Logo="images\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="images\splashscreen.png" />
+        <uap:SplashScreen Image="uwp\images\splashscreen.png" />
 
       </uap:VisualElements>
       <Extensions>

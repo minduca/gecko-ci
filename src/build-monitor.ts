@@ -1,5 +1,5 @@
-﻿import {Cardiologist} from "../helpers/cardiologist"
-import {ArrayHelper} from "../helpers/helpers"
+﻿import {Cardiologist} from "./helpers/cardiologist"
+import {ArrayHelper} from "./helpers/helpers"
 
 //Technology agnostic build monitor
 export class BuildMonitor implements App.IBuildMonitor {

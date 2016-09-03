@@ -1,5 +1,5 @@
-﻿import {GeckoFactory} from "./app/factories"
-import {ObjectHelper, ArrayHelper} from "./helpers/helpers"
+﻿import {GeckoFactory} from "../src/factories"
+import {ObjectHelper, ArrayHelper} from "../src/helpers/helpers"
 
 let http = require('http');
 

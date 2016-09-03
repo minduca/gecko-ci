@@ -1,0 +1,22 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES6",
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "locale": "en-us"
+  },
+
+  "exclude": [
+    "node_modules"
+  ]
+}

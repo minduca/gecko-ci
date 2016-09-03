@@ -1,4 +1,4 @@
-﻿/// <reference path="config.d.ts" />
+﻿/// <reference path="../src/config.d.ts" />
 
 let config: IAppConfiguration = {
     connections: [

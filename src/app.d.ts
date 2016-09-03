@@ -1,4 +1,4 @@
-﻿/// <reference path="../tfs/tfs.d.ts" />
+﻿/// <reference path="./tfs/tfs.d.ts" />
 
 declare namespace App {
 
