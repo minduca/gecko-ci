@@ -4,17 +4,9 @@
 interface IAppConfiguration {
     connections?: ConnectionsConfig[],
     buildMonitors?: BuildMonitorsConfig[],
-    lightBulbs?: LightBulbsConfig[],
-    gecko?: {
-        lights: IBuildMonitorConfig[]
-    }
+    lightBulbs?: LightBulbsConfig[]
 }
 
 type ConnectionsConfig = TFS.ITfsConnection;
 type BuildMonitorsConfig = TFS.ITfsBuildServiceOptions;
 type LightBulbsConfig = LIFX.ILifxConnection;
-
-interface IBuildMonitorConfig {
-    buildMonitorName: string;
-    lightBulbsNames: string[];
-}

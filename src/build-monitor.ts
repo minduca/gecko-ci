@@ -7,7 +7,7 @@ export class BuildMonitor implements App.IBuildMonitor {
     private lastBuildCompleted: App.IBuild;
     private cardiologist: Cardiologist;
 
-    constructor(private builds: App.IBuildServices) {
+    constructor(private builds: App.IBuildServices, public name: string) {
         this.cardiologist = new Cardiologist();
     }
 

@@ -36,61 +36,49 @@ export class GeckoFactory {
         return ObjectHelper.merge(defaults, options)
     }
 
-    private static createMonitorDevicesPairs(buildMonitors: { [name: string]: BuildMonitor }, options: App.IGeckoFactoryOptions): App.IMonitorDevicesPair[] {
+    private static createMonitorDevicesPairs(buildMonitors: BuildMonitor[], options: App.IGeckoFactoryOptions): App.IMonitorDevicesPair[] {
 
         let config = options.config;
-        let monitors = new Array<App.IMonitorDevicesPair>();
 
         if (!config.lightBulbs)
             throw "no light bulb configuration was found";
 
-        if (!config.gecko || !config.gecko.lights)
-            throw "no device mapping was found";
-
         if (!options.lightBulbfactories)
             throw "no light bulb factory was found";
 
-        config.gecko.lights.forEach(map => {
+        return buildMonitors.map<App.IMonitorDevicesPair>(build => {
 
-            let build = buildMonitors[map.buildMonitorName];
+            let lights = new Array<App.IBuildLightBulb>();
 
-            if (!build)
-                throw "build " + map.buildMonitorName + " was not found";
+            if (config.lightBulbs.length > 0) {
 
-            if (map.lightBulbsNames && map.lightBulbsNames.length > 0) {
+                let lightBulbConfigs = config.lightBulbs.filter(config => ArrayHelper.contains(config.buildMonitorsNames, name => name == build.name));
 
-                let lights = new Array<App.IBuildLightBulb>();
-                map.lightBulbsNames.forEach(lightBulbName => {
+                if (lightBulbConfigs.length > 0) {
 
-                    let lightBulbConfig = ArrayHelper.firstOrDefault(config.lightBulbs, bulb => bulb.name == lightBulbName);
+                    lights = lightBulbConfigs.map<App.IBuildLightBulb>(lightBulbConfig => {
 
-                    if (!lightBulbConfig)
-                        throw "light bulb " + lightBulbName + " was not found";
+                        let factoryfn = options.lightBulbfactories[lightBulbConfig.technology];
 
-                    let factoryfn = options.lightBulbfactories[lightBulbConfig.technology];
+                        if (!factoryfn)
+                            throw "factory " + lightBulbConfig.technology + " was not found";
 
-                    if (!factoryfn)
-                        throw "factory " + lightBulbConfig.technology + " was not found";
-
-                    let lightBulb = factoryfn(lightBulbConfig);
-                    lights.push(lightBulb);
-                });
-                
-                monitors.push({
-                    build: build,
-                    lights: lights
-                });
+                        return factoryfn(lightBulbConfig);
+                    });
+                }
             }
-            
-        });
 
-        return monitors;
+            return {
+                build: build,
+                lights: lights
+            };
+        });
     }
 }
 
 export class BuildMonitorsFactory {
 
-    public static createBuildMonitors(options: App.IGeckoFactoryOptions): { [name: string]: BuildMonitor } {
+    public static createBuildMonitors(options: App.IGeckoFactoryOptions): Array<BuildMonitor> {
 
         let monitors: { [name: string]: BuildMonitor } = {};
         let config = options.config;
@@ -101,25 +89,25 @@ export class BuildMonitorsFactory {
         if (!options.buildServicefactories)
             throw "no build service factory was found"
 
-        config.buildMonitors.forEach(buildMonitorConfig => {
+        return config.buildMonitors.map<BuildMonitor>(buildMonitorConfig => {
 
-            let technology = buildMonitorConfig.technology;
-            let factoryfn = options.buildServicefactories[technology];
-
-            if (!factoryfn)
-                throw "factory " + technology + " was not found";
-
-            let connection = ArrayHelper.firstOrDefault(config.connections, con => con.name == buildMonitorConfig.connection);
-
-            if (!connection)
-                throw "connection " + buildMonitorConfig.connection + " was not found";
-
-            let buildServices = factoryfn(connection, buildMonitorConfig);
-            let buildMonitor = new BuildMonitor(buildServices);
-            monitors[buildMonitorConfig.name] = buildMonitor;
-
+            let buildServices = BuildMonitorsFactory.createBuildServices(buildMonitorConfig, options)
+            return new BuildMonitor(buildServices, buildMonitorConfig.name);
         });
+    }
 
-        return monitors;
+    private static createBuildServices(buildMonitorConfig: BuildMonitorsConfig, options: App.IGeckoFactoryOptions): App.IBuildServices {
+
+        let connection = ArrayHelper.firstOrDefault(options.config.connections, con => con.name == buildMonitorConfig.connection);
+        let technology = buildMonitorConfig.technology;
+        let factoryfn = options.buildServicefactories[technology];
+
+        if (!factoryfn)
+            throw "factory " + technology + " was not found";
+
+        if (!connection)
+            throw "connection " + buildMonitorConfig.connection + " was not found";
+
+        return factoryfn(connection, buildMonitorConfig);
     }
 }

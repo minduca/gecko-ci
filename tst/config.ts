@@ -22,17 +22,10 @@ let config: IAppConfiguration = {
     lightBulbs: [
         {
             name: "gecko-ci bulb",
-            technology: "lifx"
+            technology: "lifx",
+            buildMonitorsNames: ["gecko-ci build"]
         }
-    ],
-    gecko: {
-        lights: [
-            {
-                buildMonitorName: "gecko-ci build",
-                lightBulbsNames: ["gecko-ci bulb"]
-            }
-        ]
-    }
+    ]
 }
 
 export = config

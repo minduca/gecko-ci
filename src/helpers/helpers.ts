@@ -76,4 +76,9 @@ export class ArrayHelper {
         array.forEach(value => dictionary[convert(value)] = value);
         return dictionary;
     }
+
+    public static contains<T>(array: T[], expr?: (obj: T) => boolean): boolean {
+
+        return ArrayHelper.firstOrDefault(array, expr) != undefined;
+    }
 }
