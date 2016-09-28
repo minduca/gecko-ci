@@ -98,15 +98,15 @@ export class BuildMonitorsFactory {
 
     private static createBuildServices(buildMonitorConfig: BuildMonitorsConfig, options: App.IGeckoFactoryOptions): App.IBuildServices {
 
-        let connection = ArrayHelper.firstOrDefault(options.config.connections, con => con.name == buildMonitorConfig.connection);
-        let technology = buildMonitorConfig.technology;
+        let connection = ArrayHelper.firstOrDefault(options.config.connections, con => con.name == buildMonitorConfig.connectionName);
+        let technology = connection.technology;
         let factoryfn = options.buildServicefactories[technology];
 
         if (!factoryfn)
             throw "factory " + technology + " was not found";
 
         if (!connection)
-            throw "connection " + buildMonitorConfig.connection + " was not found";
+            throw "connection " + buildMonitorConfig.connectionName + " was not found";
 
         return factoryfn(connection, buildMonitorConfig);
     }

@@ -14,9 +14,8 @@ let config: IAppConfiguration = {
     buildMonitors: [
         {
             name: "gecko-ci build",
-            technology: "tfs",
             teamProject: "gecko-ci",
-            connection: "default connection"
+            connectionName: "default connection"
         }
     ],
     lightBulbs: [
