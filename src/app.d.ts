@@ -3,7 +3,7 @@
 declare namespace App {
 
     interface IGeckoModule {
-        watchBuilds(options: IGeckoFactoryOptions): App.IGecko
+        watchBuilds(options: IAppConfiguration): App.IGecko
     }
 
     interface IGecko {
@@ -51,16 +51,6 @@ declare namespace App {
     interface IMonitorDevicesPair {
         build: App.IBuildMonitor;
         lights: App.IBuildLightBulb[]
-    }
-
-    interface IGeckoFactoryOptions {
-        config?: IAppConfiguration;
-        buildServicefactories?: {
-            [technology: string]: (connection: any, buildConfig: any) => App.IBuildServices
-        },
-        lightBulbfactories?: {
-            [technology: string]: (lightBulbConfig: any) => App.IBuildLightBulb
-        }
     }
 
     interface IBuildLightBulb {

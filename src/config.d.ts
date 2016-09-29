@@ -4,7 +4,13 @@
 interface IAppConfiguration {
     connections?: ConnectionsConfig[],
     buildMonitors?: BuildMonitorsConfig[],
-    lightBulbs?: LightBulbsConfig[]
+    lightBulbs?: LightBulbsConfig[],
+    buildServicefactories?: {
+        [technology: string]: (connection: any, buildConfig: any) => App.IBuildServices
+    },
+    lightBulbfactories?: {
+        [technology: string]: (lightBulbConfig: any) => App.IBuildLightBulb
+    }
 }
 
 type ConnectionsConfig = TFS.ITfsConnection;

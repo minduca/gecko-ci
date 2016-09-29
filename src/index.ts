@@ -5,7 +5,7 @@ import {TfsBuildServices} from "./tfs/tfs-build-services"
 import {ObjectHelper, ArrayHelper} from "./helpers/helpers"
 
 module.exports = {
-    watchBuilds(options: App.IGeckoFactoryOptions): App.IGecko {
+    watchBuilds(options: IAppConfiguration): App.IGecko {
         let gecko = GeckoFactory.createGecko(options);
         gecko.watchBuilds();
         return gecko;
@@ -14,7 +14,7 @@ module.exports = {
 
 class GeckoFactory {
 
-    public static createGecko(options: App.IGeckoFactoryOptions): Gecko {
+    public static createGecko(options: IAppConfiguration): Gecko {
 
         options = GeckoFactory.mergeWithDefaultOptions(options);
 
@@ -24,10 +24,10 @@ class GeckoFactory {
         return new Gecko(monitors);
     }
 
-    private static mergeWithDefaultOptions(options: App.IGeckoFactoryOptions): App.IGeckoFactoryOptions {
+    private static mergeWithDefaultOptions(options: IAppConfiguration): IAppConfiguration {
 
 
-        let defaults: App.IGeckoFactoryOptions = {
+        let defaults: IAppConfiguration = {
             buildServicefactories: {
                 "tfs": (connection: TFS.ITfsConnection, buildConfig: TFS.ITfsBuildServiceOptions): App.IBuildServices => {
                     let restClient = new TfsRestClient(connection);
@@ -44,11 +44,9 @@ class GeckoFactory {
         return ObjectHelper.merge(defaults, options)
     }
 
-    private static createMonitorDevicesPairs(buildMonitors: BuildMonitor[], options: App.IGeckoFactoryOptions): App.IMonitorDevicesPair[] {
+    private static createMonitorDevicesPairs(buildMonitors: BuildMonitor[], options: IAppConfiguration): App.IMonitorDevicesPair[] {
 
-        let config = options.config;
-
-        if (!config.lightBulbs)
+        if (!options.lightBulbs)
             throw "no light bulb configuration was found";
 
         if (!options.lightBulbfactories)
@@ -58,9 +56,9 @@ class GeckoFactory {
 
             let lights = new Array<App.IBuildLightBulb>();
 
-            if (config.lightBulbs.length > 0) {
+            if (options.lightBulbs.length > 0) {
 
-                let lightBulbConfigs = config.lightBulbs.filter(config => ArrayHelper.contains(config.buildMonitorsNames, name => name == build.name));
+                let lightBulbConfigs = options.lightBulbs.filter(config => ArrayHelper.contains(config.buildMonitorsNames, name => name == build.name));
 
                 if (lightBulbConfigs.length > 0) {
 
@@ -86,27 +84,26 @@ class GeckoFactory {
 
 class BuildMonitorsFactory {
 
-    public static createBuildMonitors(options: App.IGeckoFactoryOptions): Array<BuildMonitor> {
+    public static createBuildMonitors(options: IAppConfiguration): Array<BuildMonitor> {
 
         let monitors: { [name: string]: BuildMonitor } = {};
-        let config = options.config;
 
-        if (!config.buildMonitors)
+        if (!options.buildMonitors)
             throw "no build configuration was found";
 
         if (!options.buildServicefactories)
             throw "no build service factory was found"
 
-        return config.buildMonitors.map<BuildMonitor>(buildMonitorConfig => {
+        return options.buildMonitors.map<BuildMonitor>(buildMonitorConfig => {
 
             let buildServices = BuildMonitorsFactory.createBuildServices(buildMonitorConfig, options)
             return new BuildMonitor(buildServices, buildMonitorConfig.name);
         });
     }
 
-    private static createBuildServices(buildMonitorConfig: BuildMonitorsConfig, options: App.IGeckoFactoryOptions): App.IBuildServices {
+    private static createBuildServices(buildMonitorConfig: BuildMonitorsConfig, options: IAppConfiguration): App.IBuildServices {
 
-        let connection = ArrayHelper.firstOrDefault(options.config.connections, con => con.name == buildMonitorConfig.connectionName);
+        let connection = ArrayHelper.firstOrDefault(options.connections, con => con.name == buildMonitorConfig.connectionName);
         let technology = connection.technology;
         let factoryfn = options.buildServicefactories[technology];
 
