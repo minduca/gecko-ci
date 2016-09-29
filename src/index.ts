@@ -4,7 +4,15 @@ import {TfsRestClient} from "./tfs/tfs-rest-client"
 import {TfsBuildServices} from "./tfs/tfs-build-services"
 import {ObjectHelper, ArrayHelper} from "./helpers/helpers"
 
-export class GeckoFactory {
+module.exports = {
+    watchBuilds(options: App.IGeckoFactoryOptions): App.IGecko {
+        let gecko = GeckoFactory.createGecko(options);
+        gecko.watchBuilds();
+        return gecko;
+    }
+}
+
+class GeckoFactory {
 
     public static createGecko(options: App.IGeckoFactoryOptions): Gecko {
 
@@ -76,7 +84,7 @@ export class GeckoFactory {
     }
 }
 
-export class BuildMonitorsFactory {
+class BuildMonitorsFactory {
 
     public static createBuildMonitors(options: App.IGeckoFactoryOptions): Array<BuildMonitor> {
 

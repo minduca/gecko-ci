@@ -2,6 +2,15 @@
 
 declare namespace App {
 
+    interface IGeckoModule {
+        watchBuilds(options: IGeckoFactoryOptions): App.IGecko
+    }
+
+    interface IGecko {
+        watchBuilds(): void;
+        stopMonitoringBuilds(): void;
+    }
+
     interface IBuildServices {
         getBuilds(options: IGetBuildOptions): Promise<IBuild[]>
     }

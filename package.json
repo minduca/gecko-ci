@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "description": "a lightweight build monitor for nodejs that handles IoT gadgets and brings CI feedbacks to the real world",
   "homepage": "https://github.com/minduca/gecko-ci",
-  "main": "src/factories.js",
+  "main": "src/index.js",
   "author": {
     "name": "Arthur Minduca",
     "email": "arthur.minduca@gmail.com",

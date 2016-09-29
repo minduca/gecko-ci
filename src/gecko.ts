@@ -1,5 +1,5 @@
 ﻿
-export class Gecko {
+export class Gecko implements App.IGecko {
 
     constructor(private monitors: App.IMonitorDevicesPair[]) { }
 
@@ -30,7 +30,7 @@ export class Gecko {
         }, this);
     }
 
-    public stopMonitoringBuilds() {
+    public stopMonitoringBuilds(): void {
         this.monitors.forEach((monitor) => monitor.build.stopWatchingBuilds());
     }
 }

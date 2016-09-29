@@ -87,7 +87,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\app.d.ts" />
     <TypeScriptCompile Include="src\build-monitor.ts" />
-    <TypeScriptCompile Include="src\factories.ts" />
+    <TypeScriptCompile Include="src\index.ts" />
     <TypeScriptCompile Include="src\gecko.ts" />
     <TypeScriptCompile Include="src\config.d.ts" />
     <TypeScriptCompile Include="tst\config.user.ts" />

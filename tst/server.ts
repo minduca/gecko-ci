@@ -1,6 +1,6 @@
-﻿import {GeckoFactory} from "../src/factories"
-import {ObjectHelper, ArrayHelper} from "../src/helpers/helpers"
+﻿import {ObjectHelper, ArrayHelper} from "../src/helpers/helpers"
 
+let geckoCI: App.IGeckoModule = require("../src/index")
 let http = require('http');
 
 class Server {
@@ -9,11 +9,9 @@ class Server {
 
         let config: IAppConfiguration = this.loadConfig();
 
-        let gecko = GeckoFactory.createGecko({
+        let monitor = geckoCI.watchBuilds({
             config: config
         });
-
-        gecko.watchBuilds();
 
         this.createServer();
     }
