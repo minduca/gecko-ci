@@ -37,11 +37,14 @@ declare namespace TFS {
 
     type CteBuildReasons = "manual" | "individualCI" | "batchedCI" | "schedule" | "userCreated" | "validateShelveset" | "checkInShelveset" | "triggered";
 
-    interface ITfsConnection {
-        name: string;
+    interface ITfsConnection extends ITfsPrivateConnection {
         technology: string;
         server?: string;
         collection?: string;
+    }
+
+    interface ITfsPrivateConnection {
+        name: string;
         user?: string;
         personalToken?: string;
     }

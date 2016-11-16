@@ -17,7 +17,7 @@
     <ProjectGuid>8c9fe30f-234a-4f37-901c-ab9948b33f07</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>tst\server.js</StartupFile>
+    <StartupFile>demo\server.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="uwp\" />
-    <Folder Include="tst\" />
+    <Folder Include="demo\" />
     <Folder Include="uwp\images\" />
     <Folder Include="src\helpers\" />
     <Folder Include="src\lighting\" />
@@ -87,21 +87,27 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\app.d.ts" />
     <TypeScriptCompile Include="src\build-monitor.ts" />
+    <TypeScriptCompile Include="src\config-merger.ts" />
+    <TypeScriptCompile Include="src\gecko-factory.ts" />
     <TypeScriptCompile Include="src\index.ts" />
     <TypeScriptCompile Include="src\gecko.ts" />
     <TypeScriptCompile Include="src\config.d.ts" />
-    <TypeScriptCompile Include="tst\config.user.ts" />
-    <TypeScriptCompile Include="tst\config.ts" />
+    <TypeScriptCompile Include="demo\config.user.ts" />
+    <TypeScriptCompile Include="demo\config.ts" />
     <TypeScriptCompile Include="src\helpers\cardiologist.ts" />
     <TypeScriptCompile Include="src\helpers\helpers.ts" />
+    <TypeScriptCompile Include="src\lighting\lifx-bulb.ts" />
     <TypeScriptCompile Include="src\lighting\lifx.d.ts" />
-    <TypeScriptCompile Include="tst\server.ts" />
+    <TypeScriptCompile Include="demo\server.ts" />
     <TypeScriptCompile Include="src\tfs\tfs-build-services.ts" />
     <TypeScriptCompile Include="src\tfs\tfs-rest-client.ts" />
     <TypeScriptCompile Include="src\tfs\tfs-teamproject-services.ts" />
     <TypeScriptCompile Include="src\tfs\tfs.d.ts" />
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="demo\server.js" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsUwp.targets" />
   <PropertyGroup>

@@ -35,7 +35,10 @@ export class TfsRestClient implements TFS.ITfsRestClient {
 
                     response.on("end", () => {
 
-                        let result: T = JSON.parse(resultStr);
+                        let result: T = resultStr != '' ? JSON.parse(resultStr) : undefined;
+
+                        if (result == undefined)
+                            throw "No data was returned from TFS. Please, check if the token is expired"
 
                         if (resultParser)
                             result = resultParser(result);

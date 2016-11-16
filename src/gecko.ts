@@ -7,27 +7,44 @@ export class Gecko implements App.IGecko {
 
         this.monitors.forEach((monitor) => {
 
-            let forEachLight = (callbackfn: (lamp: App.IBuildLightBulb) => void) => {
-                if (monitor.lights && monitor.lights.length > 0)
-                    monitor.lights.forEach(callbackfn)
-            }
+            if (monitor.lights && monitor.lights.length > 0)
+                monitor.lights.forEach(light => light.init())
 
-            monitor.build.watchBuilds({
-                buildSucceeded: function (build: App.IBuild) {
-
-                    forEachLight(light => light.displayBuildSucceededStatus());
-                },
-                buildPartiallySucceeded: function (build: App.IBuild) {
-
-                    forEachLight(light => light.displayBuildPartiallySucceededStatus());
-                },
-                buildFailed: function (build: App.IBuild) {
-
-                    forEachLight(light => light.buildFailedStatus());
-                },
-            });
+            this.watch(monitor);
 
         }, this);
+    }
+
+    private watch(monitor: App.IMonitorDevicesPair): void {
+
+        let forEachLight = (callbackfn: (lamp: App.IBuildLightBulb) => void) => {
+            if (monitor.lights && monitor.lights.length > 0)
+                monitor.lights.forEach(callbackfn)
+        }
+
+        monitor.build.watchBuilds({
+            buildSucceeded: function (build: App.IBuild) {
+
+                forEachLight(light => {
+                    if (light.buildSucceeded)
+                        light.buildSucceeded();
+                });
+            },
+            buildPartiallySucceeded: function (build: App.IBuild) {
+
+                forEachLight(light => {
+                    if (light.buildPartiallySucceeded)
+                        light.buildPartiallySucceeded();
+                });
+            },
+            buildFailed: function (build: App.IBuild) {
+
+                forEachLight(light => {
+                    if (light.buildFailed)
+                        light.buildFailed();
+                });
+            },
+        });
     }
 
     public stopMonitoringBuilds(): void {

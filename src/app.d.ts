@@ -3,7 +3,13 @@
 declare namespace App {
 
     interface IGeckoModule {
-        watchBuilds(options: IAppConfiguration): App.IGecko
+        /**
+         * Initialize the build monitors.
+         *
+         * @param options a JSON object that represents the configuration file.
+         * @param privateOptions a JSON object that represents the private configuration file.
+         */
+        watchBuilds(options: IAppConfiguration, privateOptions?: IAppPrivateConfiguration): App.IGecko
     }
 
     interface IGecko {
@@ -54,8 +60,9 @@ declare namespace App {
     }
 
     interface IBuildLightBulb {
-        displayBuildSucceededStatus: () => void;
-        displayBuildPartiallySucceededStatus: () => void;
-        buildFailedStatus: () => void;
+        init: () => void;
+        buildSucceeded: () => void;
+        buildPartiallySucceeded: () => void;
+        buildFailed: () => void;
     }
 }

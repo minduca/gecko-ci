@@ -1,6 +1,10 @@
 ﻿/// <reference path="tfs/tfs.d.ts" />
 /// <reference path="lighting/lifx.d.ts" />
 
+type ConnectionsConfig = TFS.ITfsConnection;
+type BuildMonitorsConfig = TFS.ITfsBuildServiceOptions;
+type LightBulbsConfig = LIFX.ILifxConnection;
+
 interface IAppConfiguration {
     connections?: ConnectionsConfig[],
     buildMonitors?: BuildMonitorsConfig[],
@@ -13,6 +17,10 @@ interface IAppConfiguration {
     }
 }
 
-type ConnectionsConfig = TFS.ITfsConnection;
-type BuildMonitorsConfig = TFS.ITfsBuildServiceOptions;
-type LightBulbsConfig = LIFX.ILifxConnection;
+type PrivateConnectionsConfig = TFS.ITfsPrivateConnection;
+type PrivateLightBulbsConfig = LIFX.ILifxPrivateConnection;
+
+interface IAppPrivateConfiguration {
+    connections?: PrivateConnectionsConfig[],
+    lightBulbs?: PrivateLightBulbsConfig[]
+}
