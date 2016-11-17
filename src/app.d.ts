@@ -60,7 +60,6 @@ declare namespace App {
     }
 
     interface IBuildLightBulb {
-        init: () => void;
         buildSucceeded: () => void;
         buildPartiallySucceeded: () => void;
         buildFailed: () => void;

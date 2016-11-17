@@ -6,12 +6,7 @@ export class Gecko implements App.IGecko {
     public watchBuilds(): void {
 
         this.monitors.forEach((monitor) => {
-
-            if (monitor.lights && monitor.lights.length > 0)
-                monitor.lights.forEach(light => light.init())
-
             this.watch(monitor);
-
         }, this);
     }
 

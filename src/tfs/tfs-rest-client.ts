@@ -27,11 +27,10 @@ export class TfsRestClient implements TFS.ITfsRestClient {
                 }
             }, (response) => {
 
-                let resultStr = '';
                 if (resolve) {
-                    response.on("data", (data) => {
-                        resultStr += data;
-                    });
+
+                    let resultStr = '';
+                    response.on("data", (data) => resultStr += data);
 
                     response.on("end", () => {
 

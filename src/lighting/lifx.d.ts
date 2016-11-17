@@ -2,7 +2,8 @@
 
     interface ILifxConnection extends ILifxPrivateConnection {
         technology: string;
-        buildMonitorsNames: string[]
+        buildMonitorsNames: string[],
+        selector: string;
     }
 
     interface ILifxPrivateConnection {
