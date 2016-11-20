@@ -1,11 +1,11 @@
 # gecko-ci
+Gecko-ci is a NodeJS module that improves engagement of team members by providing physical feedback of the status of the build. It creates a link between a build server and smart RGB light bulbs, displaying specific colors for each build status.
 
-Gecko-ci improves engagement of team members by providing physical feedback of the status of the build. It creates a link between the build server and extreme feedback devices.
+Gecko-ci currently supports only **TFS** as build server and **[LIFX Bulbs](http://www.lifx.com/)** as extreme feedback device. 
 
-Gecko-ci currently supports only **TFS** as build server and **[LIFX Bulbs](http://www.lifx.com/)** as extreme feedback device.
+[![Stories in Backlog](https://badge.waffle.io/minduca/gecko-ci.png?label=backlog&title=Backlog)](https://waffle.io/minduca/gecko-ci)
 
 ## Quick Start
-
 Define one or more connections to your build server(s), create one or more build monitors associated to these connections and link each monitor to light bulbs that will display the status of the build.
 
 ```javascript
@@ -75,3 +75,15 @@ Attribute			| Type				| Supported values | 		| Description
 `buildMonitorsNames`	| *String[]*		| -		| Required		| array of ids of build monitors that are linked to this light bulb configuration. it must be an existing `options.buildMonitors[].name`.
 `selector`		| *String*		| -		| Required		| A LIFX selector. Check the [LIFX selectors](https://api.developer.lifx.com/docs/selectors) for the documentation of this argument.
 `personalToken`  |  *String* | -		| Required		| App token for authorizations on the LIFX server. Check the [Account settings](https://cloud.lifx.com/settings) in order to generate a token.
+
+## Build Status Colors
+When the build status change, the color of the light bulb changes accordingly. 
+
+Attribute			| Color		
+---						| ---	
+`buildSucceeded`		| Green
+`buildPartiallySucceeded`		| Orange
+`buildFailed`		| Red
+
+## License
+[GPLv3](http://www.gnu.org/licenses/gpl-3.0.html)
