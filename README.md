@@ -3,7 +3,8 @@ Gecko-ci is a NodeJS module that improves engagement of team members by providin
 
 Gecko-ci currently supports only **TFS** as build server and **[LIFX Bulbs](http://www.lifx.com/)** as extreme feedback device. 
 
-[![Stories in Ready](https://badge.waffle.io/minduca/gecko-ci.svg?label=ready&title=Ready)](http://waffle.io/minduca/gecko-ci)
+[![Dependency Status](https://david-dm.org/minduca/gecko-ci.svg)](https://david-dm.org/minduca/gecko-ci)
+[![Stories in Ready](https://badge.waffle.io/minduca/gecko-ci.svg?label=ready&title=ready)](http://waffle.io/minduca/gecko-ci)
 
 ## Quick Start
 Define one or more connections to your build server(s), create one or more build monitors associated to these connections and link each monitor to light bulbs that will display the status of the build.
@@ -86,4 +87,4 @@ Attribute			| Color
 `buildFailed`		| Red
 
 ## License
-[GPLv3](http://www.gnu.org/licenses/gpl-3.0.html)
+See [LICENSE](https://github.com/minduca/gecko-ci/blob/master/LICENSE.txt) file.
