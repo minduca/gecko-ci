@@ -34,7 +34,7 @@ let monitor = gecko.watchBuilds({
         {
             name: "my monitor 01",
             teamProject: "gecko-ci",
-            connectionName: "default connection"
+            connectionName: "my connection 01"
         }
     ],
     lightBulbs: [
@@ -87,7 +87,7 @@ Array of light bulbs that display the status of one or more build monitors
 ## Build Status Colors
 When the build status change, the color of the light bulb changes accordingly. 
 
-| Attribute		            | Color	  |
+| Status change	            | Color	  |
 | :------------------------ | :------ |
 | `buildSucceeded`  	    | Green   |
 | `buildPartiallySucceeded` | Orange  |
