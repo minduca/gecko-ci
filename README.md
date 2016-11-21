@@ -94,4 +94,4 @@ When the build status change, the color of the light bulb changes accordingly.
 | `buildFailed`		        | Red     |
 
 ## License
-[GPL-3.0](https://github.com/minduca/gecko-ci/blob/master/LICENSE.txt).
+[GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html)
