@@ -33,7 +33,7 @@ let monitor = gecko.watchBuilds({
     buildMonitors: [
         {
             name: "my monitor 01",
-            teamProject: "gecko-ci",
+            teamProject: "MyTeamProject",
             connectionName: "my connection 01"
         }
     ],
