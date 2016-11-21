@@ -55,11 +55,11 @@ let monitor = gecko.watchBuilds({
 Array of connections to one or more build servers.
 
 | Attribute		   | Type	  | Supported values |  	    | Description |
-| ---------------- | -------- | ---------------- | -------- | ----------- |
+| :--------------- | :------: | :--------------- | :------: | :---------- |
 | `name`		   | *String* | -		         | Required		| Unique name (id) of the connection. |
 | `technology`	   | *String* | "tfs"		     | Required		| Technology of the build server. TFS is currently the only build server supported. |
 | `collection`	   | *String* | -		         | Required		| Name of the Team Project Collection on TFS. |
-| `server`	       | *String* | -		         | Required		| Full address of the build server. |
+| `server`	       | *String* | -		         | Required		| Address of the build server. |
 | `user`           | *String* | -		         | Required		| User account to authenticate to the build server via REST api. |
 | `personalToken`  | *String* | -		         | Required		| App token for authorizations on the build server. For TFS, take a look at [Create personal access tokens to authenticate access](https://www.visualstudio.com/en-us/docs/integrate/get-started/auth/overview). Only the scope **Build (read)** is required. The token supplied must be associated to the value supplied on `user`. |
 
@@ -67,17 +67,17 @@ Array of connections to one or more build servers.
 Array of monitors that connect to build servers and check the build status
 
 | Attribute		   | Type	  | Supported values |  	    | Description |
-| ---------------- | -------- | ---------------- | -------- | ----------- |
+| :--------------- | :------: | :--------------- | :------: | :---------- |
 | `name`		   | *String* | -                | Required | Unique name (id) of the build monitor. |
 | `teamProject`	   | *String* | -		         | Required	| Name of the Team Project on TFS. |
 | `connectionName` | *String* | -		         | Required	| id of the connection that will be used by the monitor. it must be an existing `options.connections[].name`. | 
-| `definitions`<br/>`queues`<br/>`type`<br/>`requestedFor`<br/>`reasonFilter`<br/>`tagFilters`<br/>`propertyFilters`	| *String*		| -		| Optional		| TFS arguments that are also supported. Check the [TFS Builds api](https://www.visualstudio.com/en-us/docs/integrate/api/build/builds) for the MSDN documentation of these arguments. Although it's strongly recommended that you don't try to override the other TFS arguments (since gecko-ci will handle them), you can play with them at your own risk. |
+| `definitions`<br/>`queues`<br/>`type`<br/>`requestedFor`<br/>`reasonFilter`<br/>`tagFilters`<br/>`propertyFilters`<br/>	| *String*		| -		| Optional		| TFS arguments that are also supported. Check the [TFS Builds api](https://www.visualstudio.com/en-us/docs/integrate/api/build/builds) for the MSDN documentation of these arguments. Although it's strongly recommended that you don't try to override the other TFS arguments (since gecko-ci will handle them), you can play with them at your own risk. |
 
 #### `lightBulbs`
 Array of light bulbs that display the status of one or more build monitors
 
 | Attribute		   | Type	  | Supported values |  	    | Description |
-| ---------------- | -------- | ---------------- | -------- | ----------- |
+| :--------------- | :------: | :--------------- | :------: | :---------- |
 | `name`   		   | *String* | -		         | Required	| Unique name (id) of the light bulb. |
 | `technology`	   | *String* | **"lifx"**		 | Required	| Technology of the light bulb. LIFX is currently the only bulb supported. |
 | `buildMonitorsNames`	| *String[]*		| -		| Required		| array of ids of build monitors that are linked to this light bulb configuration. it must be an existing `options.buildMonitors[].name`. |
@@ -88,7 +88,7 @@ Array of light bulbs that display the status of one or more build monitors
 When the build status change, the color of the light bulb changes accordingly. 
 
 | Attribute		            | Color	  |
-| ------------------------- | ------- |
+| :------------------------ | :------ |
 | `buildSucceeded`  	    | Green   |
 | `buildPartiallySucceeded` | Orange  |
 | `buildFailed`		        | Red     |
