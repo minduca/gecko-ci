@@ -10,9 +10,16 @@
     "url": "https://arthurminduca.com/"
   },
   "keywords": [
+    "gecko",
+    "gecko-ci",
     "ci",
     "iot",
-    "extreme feedback"
+    "extreme feedback",
+    "gadgets",
+    "devices",
+    "lifx",
+    "tfs",
+    "team foundation server"
   ],
   "repository": {
     "type": "git",
