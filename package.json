@@ -1,6 +1,7 @@
 {
   "name": "gecko-ci",
   "version": "1.0.6",
+  "private": false,
   "description": "a lightweight build monitor for nodejs that handles IoT gadgets and brings CI feedbacks to the real world",
   "homepage": "https://github.com/minduca/gecko-ci",
   "main": "src/index.js",
@@ -9,6 +10,13 @@
     "email": "arthur.minduca@gmail.com",
     "url": "https://arthurminduca.com/"
   },
+  "maintainers": [
+    {
+      "name": "Arthur Minduca",
+      "email": "arthur.minduca@gmail.com",
+      "url": "https://arthurminduca.com/"
+    }
+  ],
   "keywords": [
     "gecko",
     "gecko-ci",

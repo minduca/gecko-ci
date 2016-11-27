@@ -51,6 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="bower.json" />
     <Content Include="demo\.gitignore" />
     <Content Include="LICENSE.txt" />
     <Content Include="package.json" />
