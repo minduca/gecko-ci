@@ -1,0 +1,53 @@
+{
+  "name": "gecko-ci",
+  "private": false,
+  "description": "a lightweight build monitor for nodejs that handles IoT gadgets and brings CI feedbacks to the real world",
+  "authors": [
+    {
+      "name": "Arthur Minduca",
+      "email": "arthur.minduca@gmail.com",
+      "homepage": "https://arthurminduca.com/"
+    }
+  ],
+  "main": "dist/gecko-ci.js",
+  "homepage": "https://github.com/minduca/gecko-ci",
+  "ignore": [
+    "demo",
+    "src",
+    "tst",
+    "uwp",
+    "typings",
+    "package.json",
+    "pubish.txt",
+    "tsconfig.json",
+    "typings.json",
+    "node_modules",
+    "bower_components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minduca/gecko-ci.git"
+  },
+  "keywords": [
+    "gecko",
+    "gecko-ci",
+    "ci",
+    "iot",
+    "extreme",
+    "feedback",
+    "gadgets",
+    "devices",
+    "lifx",
+    "tfs",
+    "team",
+    "foundation",
+    "server"
+  ],
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  },
+  "license": "GPL-3.0"
+}

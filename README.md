@@ -1,5 +1,5 @@
 # gecko-ci
-Gecko-ci is a NodeJS module that improves engagement of team members by providing physical feedback of the status of the build. It creates a link between a build server and smart RGB light bulbs, displaying specific colors for each build status.
+Gecko-ci is a lightweight NodeJS module that improves engagement of team members by providing physical feedback of the status of the build. It creates a link between a build server and smart RGB light bulbs, displaying specific colors for each build status.
 
 Gecko-ci currently supports only **TFS** as build server and **[LIFX Bulbs](http://www.lifx.com/)** as extreme feedback device. 
 
@@ -49,6 +49,10 @@ let monitor = gecko.watchBuilds({
 });
 ```
 
+To stop the application, you simply do
+```javascript
+monitor.stopWatchingBuilds();
+```
 ## Options
 
 #### `connections`

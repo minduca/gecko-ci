@@ -42,7 +42,7 @@ export class Gecko implements App.IGecko {
         });
     }
 
-    public stopMonitoringBuilds(): void {
+    public stopWatchingBuilds(): void {
         this.monitors.forEach((monitor) => monitor.build.stopWatchingBuilds());
     }
 }
