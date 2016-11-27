@@ -22,7 +22,9 @@
     "tsconfig.json",
     "typings.json",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "gecko.sln",
+    "gecko.njsproj"
   ],
   "repository": {
     "type": "git",

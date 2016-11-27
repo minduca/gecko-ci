@@ -1,4 +1,3 @@
-## Ignore user configuration
 *.user.*
 *js
 !server.js

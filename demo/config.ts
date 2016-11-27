@@ -23,7 +23,8 @@ let config: IAppConfiguration = {
             name: "gecko-ci bulb",
             technology: "lifx",
             buildMonitorsNames: ["gecko-ci build"],
-            selector: "all"
+            selector: "all",
+            personalToken: ""
         }
     ]
 }

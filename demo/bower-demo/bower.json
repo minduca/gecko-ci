@@ -1,5 +1,5 @@
 {
-  "name": "gecko-ci-tst-browser",
+  "name": "gecko-ci-demo-browser",
   "private": true,
   "dependencies": {
     "gecko-ci": "^1.0.0"

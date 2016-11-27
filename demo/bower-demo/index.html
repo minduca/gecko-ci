@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+
+    <style type="text/css">
+        .status-failed {
+            color: #FF3022;
+        }
+        .status-succeeded {
+            color: #9ACD32;
+        }
+        .status-partially-succeeded {
+            color: #FF6A00;
+        }
+    </style>
+</head>
+<body>
+    <h1>gecko-ci</h1>
+    <label>Build status : </label><span id="status"></span>
+    <script type="text/javascript" src="bower_components/gecko-ci/dist/gecko-ci.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
