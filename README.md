@@ -49,6 +49,10 @@ let monitor = gecko.watchBuilds({
 });
 ```
 
+To stop the application, you simply do
+```javascript
+monitor.stopWatchingBuilds();
+```
 ## Options
 
 #### `connections`
