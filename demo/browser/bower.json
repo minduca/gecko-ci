@@ -1,0 +1,7 @@
+{
+  "name": "gecko-ci-tst-browser",
+  "private": true,
+  "dependencies": {
+    "gecko-ci": "^1.0.6"
+  }
+}

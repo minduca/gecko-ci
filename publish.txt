@@ -1,0 +1,12 @@
+﻿
+--cd gecko project root folder
+
+browserify "src/index.js" -o "dist/gecko-ci.js"
+
+bower cache clean
+
+npm version patch|minor|major
+
+npm publish
+
+bower register gecko-ci https://github.com/minduca/gecko-ci.git
