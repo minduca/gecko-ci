@@ -1,0 +1,4 @@
+## Ignore user configuration
+/bower_components/
+*.user.*
+*js

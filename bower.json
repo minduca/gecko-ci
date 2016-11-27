@@ -12,8 +12,17 @@
   "main": "dist/gecko-ci.js",
   "homepage": "https://github.com/minduca/gecko-ci",
   "ignore": [
-    "*",
-    "!dist/*"
+    "demo",
+    "src",
+    "tst",
+    "uwp",
+    "typings",
+    "package.json",
+    "pubish.txt",
+    "tsconfig.json",
+    "typings.json",
+    "node_modules",
+    "bower_components"
   ],
   "repository": {
     "type": "git",
