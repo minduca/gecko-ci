@@ -5,14 +5,17 @@ class Server {
 
     public init(): void {
 
+        //Load configuration files
         let config = require("./config");
         let privateConfig = require("./config.user")
 
+        //start monitoring
         let monitor = gecko.watchBuilds(config, privateConfig);
 
-        this.createServer();
+        //stop monitoring
+        monitor.stopWatchingBuilds();
 
-        monitor.stopWatchingBuilds()
+        this.createServer();
     }
 
     private createServer() {
