@@ -14,7 +14,7 @@ declare namespace App {
 
     interface IGecko {
         watchBuilds(): void;
-        stopMonitoringBuilds(): void;
+        stopWatchingBuilds(): void;
     }
 
     interface IBuildServices {
