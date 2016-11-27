@@ -7403,7 +7403,7 @@ class Gecko {
             },
         });
     }
-    stopMonitoringBuilds() {
+    stopWatchingBuilds() {
         this.monitors.forEach((monitor) => monitor.build.stopWatchingBuilds());
     }
 }
