@@ -11,6 +11,8 @@ class Server {
         let monitor = gecko.watchBuilds(config, privateConfig);
 
         this.createServer();
+
+        monitor.stopWatchingBuilds()
     }
 
     private createServer() {
