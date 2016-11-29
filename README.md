@@ -9,16 +9,26 @@ Gecko-ci currently supports only **TFS** as build server and **[LIFX Bulbs](http
 
 ## Install
 
-**node.js**
+**node.js** & **bower**
 ```javascript
 npm install gecko-ci --save
+bower install gecko-it --save
 ```
+
 ## Quick Start
 Define one or more connections to your build server(s), create one or more build monitors associated to these connections and link each monitor to light bulbs that will display the status of the build.
 
+**node.js**
 ```javascript
 let gecko = require("gecko-ci")
+```
 
+**browser**
+```javascript
+let gecko = window.$gecko
+```
+
+```javascript
 let monitor = gecko.watchBuilds({
     connections: [
         {
