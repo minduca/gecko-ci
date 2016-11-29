@@ -1,5 +1,5 @@
 ﻿let https = require("https")
-var querystring = require('querystring');
+let querystring = require('querystring');
 
 export class LifxBulb implements App.IBuildLightBulb {
 

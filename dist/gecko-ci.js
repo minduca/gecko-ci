@@ -7524,7 +7524,7 @@ module.exports = {
 (function (Buffer){
 "use strict";
 let https = require("https");
-var querystring = require('querystring');
+let querystring = require('querystring');
 class LifxBulb {
     constructor(connection) {
         this.connection = connection;
@@ -7634,16 +7634,22 @@ exports.TfsBuildServices = TfsBuildServices;
 "use strict";
 const helpers_1 = require("../helpers/helpers");
 let urlapi = require("url");
+let http = require("http");
+let https = require("https");
 class TfsRestClient {
     constructor(connection) {
         this.connection = connection;
     }
     get(options, resultParser) {
         let url = this.buildUrl(options);
-        this.loadHttpModule(url.protocol);
         let credentialsBase64 = new Buffer(this.connection.user + ":" + this.connection.personalToken).toString('base64');
+        let requestModule;
+        if (url.protocol == "http")
+            requestModule = http;
+        else if (url.protocol == "https")
+            requestModule = https;
         return new Promise(function (resolve, reject) {
-            let req = this.http.request({
+            let req = requestModule.request({
                 hostname: url.hostname,
                 path: url.path,
                 method: "GET",
@@ -7699,17 +7705,8 @@ class TfsRestClient {
             path: pathBuilder.join("")
         };
     }
-    loadHttpModule(protocol) {
-        if (!this.http) {
-            let supportedProtocols = ["http", "https"];
-            if (!protocol || supportedProtocols.indexOf(protocol) == -1) {
-                throw "protocol " + protocol + " is not supported";
-            }
-            this.http = require(protocol);
-        }
-    }
 }
 exports.TfsRestClient = TfsRestClient;
 }).call(this,require("buffer").Buffer)
-},{"../helpers/helpers":41,"buffer":4,"url":32}]},{},[42])(42)
+},{"../helpers/helpers":41,"buffer":4,"http":26,"https":8,"url":32}]},{},[42])(42)
 });

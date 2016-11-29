@@ -1,9 +1,9 @@
 ﻿import {UrlHelper} from "../helpers/helpers"
 let urlapi = require("url");
+let http = require("http");
+let https = require("https");
 
 export class TfsRestClient implements TFS.ITfsRestClient {
-
-    private http;
 
     constructor(private connection: TFS.ITfsConnection) { }
 
@@ -11,13 +11,18 @@ export class TfsRestClient implements TFS.ITfsRestClient {
 
         let url = this.buildUrl(options);
 
-        this.loadHttpModule(url.protocol);
-
         let credentialsBase64 = new Buffer(this.connection.user + ":" + this.connection.personalToken).toString('base64');
+
+        let requestModule;
+
+        if (url.protocol == "http")
+            requestModule = http;
+        else if (url.protocol == "https")
+            requestModule = https;
 
         return new Promise<T>(function (resolve, reject) {
 
-            let req = this.http.request({
+            let req = requestModule.request({
                 hostname: url.hostname,
                 path: url.path,
                 method: "GET",
@@ -100,19 +105,5 @@ export class TfsRestClient implements TFS.ITfsRestClient {
             port: url.port,
             path: pathBuilder.join("")
         };
-    }
-
-    private loadHttpModule(protocol: string) {
-
-        if (!this.http) {
-
-            let supportedProtocols = ["http", "https"];
-
-            if (!protocol || supportedProtocols.indexOf(protocol) == -1) {
-                throw "protocol " + protocol + " is not supported";
-            }
-
-            this.http = require(protocol);
-        }
     }
 }

@@ -2,7 +2,6 @@
 --cd gecko project root folder
 
 browserify "src/index.js" --standalone $gecko > "dist/gecko-ci.js"
--- browserify "src/index.js" -o "dist/gecko-ci.js"
 
 npm version patch|minor|major
 
