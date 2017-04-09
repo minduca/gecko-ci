@@ -53,6 +53,7 @@
     <Content Include=".gitignore" />
     <Content Include="bower.json" />
     <Content Include="demo\.gitignore" />
+    <Content Include="index.html" />
     <Content Include="LICENSE.txt" />
     <Content Include="package.json" />
     <Content Include="publish.txt" />
