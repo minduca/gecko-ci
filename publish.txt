@@ -3,6 +3,8 @@
 
 browserify "src/index.js" --standalone $gecko > "dist/gecko-ci.js"
 
+(commit push)
+
 npm version patch|minor|major
 
 git push --tags
