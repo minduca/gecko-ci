@@ -41,7 +41,7 @@
         <hr />
 
         <p class="lead">
-            This demo runs on client side and absolute no data is stored, but please create tokens giving the bare minimum permissions required by the client.
+            Please create tokens giving only the bare minimum permissions required by the client.
         </p>
 
         <div class="row" ng-controller="GeckoCIController">
@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="personalToken">Personal token :</label> <small class="text-muted pull-right">Only the scope <strong>Build (read)</strong> is required.</small>
+                        <label for="personalToken">Personal token :</label> <b><small class="pull-right">Only the scope Build (read) is required.</small></b>
                         <input type="text" class="form-control" name="personalToken" placeholder="xxxXXXxxXXXXxxXXXXxxxXXXXxxXXXXxxxxxXXXXxxx" autocomplete="off" ng-model="config.tfsPersonalToken" required />
                     </div>
 
