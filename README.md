@@ -1,5 +1,5 @@
 # gecko-ci
-Gecko-ci is a lightweight NodeJS module that improves engagement of team members by providing physical feedback of the status of the build. It creates a link between a build server and smart RGB light bulbs, displaying specific colors for each build status.
+Gecko-ci is a lightweight plugin that improves engagement of team members by providing physical feedback of the status of the build. It creates a link between a build server and smart RGB light bulbs, displaying specific colors for each build status.
 
 Gecko-ci currently supports only **TFS** as build server and **[LIFX Bulbs](http://www.lifx.com/)** as extreme feedback device. 
 
@@ -7,8 +7,16 @@ Gecko-ci currently supports only **TFS** as build server and **[LIFX Bulbs](http
 [![npm](https://img.shields.io/npm/dt/gecko-ci.svg)](https://www.npmjs.com/package/gecko-ci)
 [![Stories in Ready](https://badge.waffle.io/minduca/gecko-ci.svg?label=ready&title=ready)](http://waffle.io/minduca/gecko-ci)
 
-## Install
+## Build Status Colors
+When the build status change, the color of the light bulb changes accordingly. 
 
+| Status change	            | Color	  |
+| :------------------------ | :------ |
+| `buildSucceeded`  	    | Green   |
+| `buildPartiallySucceeded` | Orange  |
+| `buildFailed`		        | Red     |
+
+## Install
 **node.js** & **bower**
 ```javascript
 npm install gecko-ci --save
@@ -97,15 +105,6 @@ Array of light bulbs that display the status of one or more build monitors
 | `buildMonitorsNames`	| *String[]*		| -		| Required		| array of ids of build monitors that are linked to this light bulb configuration. it must be an existing `options.buildMonitors[].name`. |
 | `selector`		| *String*		| -		| Required		| A LIFX selector. Check the [LIFX selectors](https://api.developer.lifx.com/docs/selectors) for the documentation of this argument. |
 | `personalToken`  |  *String* | -		| Required		| App token for authorizations on the LIFX server. Check the [Account settings](https://cloud.lifx.com/settings) in order to generate a token. |
-
-## Build Status Colors
-When the build status change, the color of the light bulb changes accordingly. 
-
-| Status change	            | Color	  |
-| :------------------------ | :------ |
-| `buildSucceeded`  	    | Green   |
-| `buildPartiallySucceeded` | Orange  |
-| `buildFailed`		        | Red     |
 
 ## License
 [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html)
