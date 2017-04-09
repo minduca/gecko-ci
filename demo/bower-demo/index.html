@@ -2,11 +2,215 @@
 <html>
 <head>
     <title></title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+
+    <link type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 750px) {
+            .form {
+                border-right: solid 1px #DDD;
+            }
+        }
+
+        @media (max-width: 749px) {
+
+            .form {
+                border-bottom: solid 1px #DDD;
+                padding-bottom: 20px;
+            }
+        }
+
+        .status {
+            border: solid 1px #DDD;
+        }
+    </style>
 </head>
-<body>
-    <h1>gecko-ci</h1>
+<body ng-app="app">
+
+    <section class="container">
+
+        <h1>gecko-ci</h1>
+        <span class="text-muted">Live demo</span>
+        <hr />
+
+        <p class="lead">
+            This demo runs on client side and absolute no data is stored. We still reinforce that, for security purposes, create tokens giving the bare minimum permissions required by the client.
+        </p>
+
+        <div class="row" ng-controller="GeckoCIController">
+
+            <div class="col-sm-6 form">
+                <h4>TFS arguments</h4>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="emailcollection">Collection :</label>
+                        <input type="text" class="form-control" name="collection" ng-model="config.tfsCollection" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="server">Server :</label>
+                        <input type="text" class="form-control" name="server" placeholder="https://<account>.visualstudio.com/" ng-model="config.tfsServer" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user">User :</label>
+                        <input type="text" class="form-control" name="user" placeholder="user@domain.com" ng-model="config.tfsUser" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalToken">Personal token :</label> <small class="text-muted pull-right">Only the scope <strong>Build (read)</strong> is required.</small>
+                        <input type="text" class="form-control" name="personalToken" placeholder="xxxXXXxxXXXXxxXXXXxxxXXXXxxXXXXxxxxxXXXXxxx" autocomplete="off" ng-model="config.tfsPersonalToken" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teamProject">Team project :</label>
+                        <input type="text" class="form-control" name="teamProject" ng-model="config.tfsTeamProject" required />
+                    </div>
+                </div>
+
+                <h4>LIFX arguments (optional)</h4>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="pwdlifx-selector">Selector :</label>
+                        <input type="text" class="form-control" name="lifx-selector" ng-model="config.lifxSelector" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="lifx-personalToken">Personal token :</label>
+                        <input type="text" class="form-control" name="lifx-personalToken" placeholder="xxxXXXxxXXXXxxXXXXxxxXXXXxxXXXXxxxxxXXXXxxx" autocomplete="off" ng-model="config.lifxPersonalToken" required />
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-info btn-lg" ng-click="start(config)" ng-disabled="started" style="padding-left:40px;padding-right:40px">Start</button>
+            </div>
+
+            <div class="col-sm-6 result-section">
+                <h4>Build Status</h4>
+
+                <div class="status text-center" ng-class="textStatusClass">
+                    <span class="h1" ng-bind="textStatus"></span>
+                </div>
+
+                <div id="console" class="text-danger"></div>
+            </div>
+        </div>
+
+    </section>
+
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bower_components/angularjs/angular.min.js"></script>
     <script type="text/javascript" src="bower_components/gecko-ci/dist/gecko-ci.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+
+    <script type="text/javascript">
+
+        let gecko = window.$gecko;
+
+        angular.module('app', [])
+            .controller('GeckoCIController', ['$scope', function ($scope) {
+
+                $scope.started = false
+                $scope.textStatus = "Not running"
+                $scope.messages = {}
+
+                $scope.config = {
+                    tfsCollection: "DefaultCollection",
+                    lifxSelector: "all"
+                }
+
+                $scope.start = function (config) {
+
+                    $scope.started = true
+                    $scope.textStatus = "Started"
+
+                    let options = {
+                        connections: [
+                            {
+                                name: "default connection",
+                                technology: "tfs",
+                                collection: config.tfsCollection,
+                                server: config.tfsServer,
+                                user: config.tfsUser,
+                                personalToken: config.tfsPersonalToken
+                            }
+                        ],
+                        buildMonitors: [
+                            {
+                                name: "default monitor",
+                                teamProject: config.tfsTeamProject,
+                                connectionName: "default connection"
+                            }
+                        ],
+                        lightBulbs: [
+                            {
+                                name: "local",
+                                technology: "browser",
+                                buildMonitorsNames: ["default monitor"]
+                            }
+                        ],
+                        lightBulbfactories: {
+                            "browser": function (connection) {
+
+                                let changeStatus = (newStatus, newTextStatusClass) => {
+                                    $scope.textStatus = newStatus;
+                                    $scope.textStatusClass = newTextStatusClass;
+                                    $scope.$apply();
+                                }
+
+                                return {
+                                    buildSucceeded: () => {
+                                        changeStatus("Success", "text-success");
+                                    },
+                                    buildPartiallySucceeded: () => {
+                                        changeStatus("Partial success", "text-warning");
+                                    },
+                                    buildFailed: () => {
+                                        changeStatus("Fail", "text-danger");
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (config.lifxSelector && config.lifxPersonalToken) {
+                        options.lightBulbs.push({
+                            name: "default bulb",
+                            technology: "lifx",
+                            buildMonitorsNames: ["default monitor"],
+                            selector: config.lifxSelector,
+                            personalToken: config.lifxPersonalToken
+                        })
+                    }
+
+                    $scope.monitor = gecko.watchBuilds(options);
+                };
+
+            }]);
+
+        let handleConsole = function () {
+            if (typeof console != "undefined")
+                if (typeof console.log != 'undefined')
+                    console.olog = console.log;
+                else
+                    console.olog = function () { };
+
+            console.log = function (message) {
+                console.olog(message);
+                $('#console').append('<p>' + message + '</p>');
+            };
+            console.error = console.debug = console.info = console.log
+        }
+
+        handleConsole();
+
+    </script>
 </body>
 </html>
