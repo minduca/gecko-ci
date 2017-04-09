@@ -56,7 +56,7 @@
     <Content Include="LICENSE.txt" />
     <Content Include="package.json" />
     <Content Include="publish.txt" />
-    <Content Include="README" />
+    <Content Include="README.md" />
     <Content Include="src\.gitignore" />
     <Content Include="tsconfig.json" />
     <Content Include="typings.json" />
