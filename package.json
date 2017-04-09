@@ -35,7 +35,6 @@
   },
   "bugs": "https://github.com/minduca/gecko-ci/issues",
   "files": [
-    "README.md",
     "src"
   ],
   "license": "GPL-3.0",
