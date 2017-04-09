@@ -41,7 +41,7 @@
         <hr />
 
         <p class="lead">
-            This demo runs on client side and absolute no data is stored. We still reinforce that, for security purposes, create tokens giving the bare minimum permissions required by the client.
+            This demo runs on client side and absolute no data is stored, but please create tokens giving the bare minimum permissions required by the client.
         </p>
 
         <div class="row" ng-controller="GeckoCIController">
@@ -89,7 +89,9 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-info btn-lg" ng-click="start(config)" ng-disabled="started" style="padding-left:40px;padding-right:40px">Start</button>
+                <button type="button" class="btn btn-success btn-lg" ng-click="start(config)" ng-hide="isRunning()" style="width:120px">Start</button>
+                <button type="button" class="btn btn-default btn-lg ng-hide" ng-click="stop()" ng-hide="!isRunning()" style="width:120px">Stop</button>
+
             </div>
 
             <div class="col-sm-6 result-section">
@@ -117,7 +119,6 @@
         angular.module('app', [])
             .controller('GeckoCIController', ['$scope', function ($scope) {
 
-                $scope.started = false
                 $scope.textStatus = "Not running"
                 $scope.messages = {}
 
@@ -128,8 +129,7 @@
 
                 $scope.start = function (config) {
 
-                    $scope.started = true
-                    $scope.textStatus = "Started"
+                    $("#console").html("");
 
                     let options = {
                         connections: [
@@ -159,21 +159,18 @@
                         lightBulbfactories: {
                             "browser": function (connection) {
 
-                                let changeStatus = (newStatus, newTextStatusClass) => {
-                                    $scope.textStatus = newStatus;
-                                    $scope.textStatusClass = newTextStatusClass;
-                                    $scope.$apply();
-                                }
-
                                 return {
                                     buildSucceeded: () => {
                                         changeStatus("Success", "text-success");
+                                        $scope.$apply();
                                     },
                                     buildPartiallySucceeded: () => {
                                         changeStatus("Partial success", "text-warning");
+                                        $scope.$apply();
                                     },
                                     buildFailed: () => {
                                         changeStatus("Fail", "text-danger");
+                                        $scope.$apply();
                                     }
                                 }
                             }
@@ -191,7 +188,26 @@
                     }
 
                     $scope.monitor = gecko.watchBuilds(options);
+
+                    $scope.textStatus = "Connecting..."
                 };
+
+                $scope.stop = function () {
+                    if ($scope.monitor) {
+                        $scope.monitor.stopWatchingBuilds();
+                        $scope.monitor = undefined;
+                        changeStatus("Not running")
+                    }
+                }
+
+                $scope.isRunning = function () {
+                    return $scope.monitor != undefined
+                }
+
+                let changeStatus = (newStatus, newTextStatusClass) => {
+                    $scope.textStatus = newStatus;
+                    $scope.textStatusClass = newTextStatusClass;
+                }
 
             }]);
 
