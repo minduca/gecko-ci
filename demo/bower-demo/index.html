@@ -46,7 +46,7 @@
 
         <div class="row" ng-controller="GeckoCIController">
 
-            <div class="col-sm-6 form">
+            <form class="col-sm-6 form">
                 <h4>TFS arguments</h4>
 
                 <div class="form-section">
@@ -57,43 +57,43 @@
 
                     <div class="form-group">
                         <label for="server">Server :</label>
-                        <input type="text" class="form-control" name="server" placeholder="https://<account>.visualstudio.com/" ng-model="config.tfsServer" required />
+                        <input type="url" class="form-control" name="server" id="server" placeholder="https://<account>.visualstudio.com/" ng-model="config.tfsServer" required />
                     </div>
 
                     <div class="form-group">
                         <label for="user">User :</label>
-                        <input type="text" class="form-control" name="user" placeholder="user@domain.com" ng-model="config.tfsUser" required />
+                        <input type="text" class="form-control" name="user" id="user" placeholder="user@domain.com" ng-model="config.tfsUser" required />
                     </div>
 
                     <div class="form-group">
                         <label for="personalToken">Personal token :</label> <b><small class="pull-right">Only the scope Build (read) is required.</small></b>
-                        <input type="text" class="form-control" name="personalToken" placeholder="xxxXXXxxXXXXxxXXXXxxxXXXXxxXXXXxxxxxXXXXxxx" autocomplete="off" ng-model="config.tfsPersonalToken" required />
+                        <input type="text" class="form-control" name="personalToken" id="personalToken" placeholder="xxxXXXxxXXXXxxXXXXxxxXXXXxxXXXXxxxxxXXXXxxx" autocomplete="off" ng-model="config.tfsPersonalToken" required />
                         <small class="text-muted">Please create tokens giving only the bare minimum permissions required by the client.</small>
                     </div>
 
                     <div class="form-group">
                         <label for="teamProject">Team project :</label>
-                        <input type="text" class="form-control" name="teamProject" ng-model="config.tfsTeamProject" required />
+                        <input type="text" class="form-control" name="teamProject" id="teamProject" ng-model="config.tfsTeamProject" required />
                     </div>
                 </div>
 
-                <h4>LIFX arguments (optional)</h4>
+                <input type="checkbox" ng-model="config.lifxActive" id="lifx-active" /> <label for="lifx-active" class="h4">LIFX arguments (optional)</label>
 
                 <div class="form-section">
                     <div class="form-group">
                         <label for="pwdlifx-selector">Selector :</label>
-                        <input type="text" class="form-control" name="lifx-selector" ng-model="config.lifxSelector" required />
+                        <input type="text" ng-disabled="!config.lifxActive" class="form-control" name="lifx-selector" id="lifx-selector" ng-model="config.lifxSelector" required />
                     </div>
                     <div class="form-group">
                         <label for="lifx-personalToken">Personal token :</label>
-                        <input type="text" class="form-control" name="lifx-personalToken" placeholder="xxxXXXxxXXXXxxXXXXxxxXXXXxxXXXXxxxxxXXXXxxx" autocomplete="off" ng-model="config.lifxPersonalToken" required />
+                        <input type="text" ng-disabled="!config.lifxActive" class="form-control" name="lifx-personalToken" id="lifx-personalToken" placeholder="xxxXXXxxXXXXxxXXXXxxxXXXXxxXXXXxxxxxXXXXxxx" autocomplete="off" ng-model="config.lifxPersonalToken" required />
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-success btn-lg" ng-click="start(config)" ng-hide="isRunning()" style="width:120px">Start</button>
+                <button type="submit" class="btn btn-success btn-lg" ng-click="start(config)" ng-hide="isRunning()" style="width:120px">Start</button>
                 <button type="button" class="btn btn-default btn-lg ng-hide" ng-click="stop()" ng-hide="!isRunning()" style="width:120px">Stop</button>
 
-            </div>
+            </form>
 
             <div class="col-sm-6 result-section">
                 <h4>Build Status</h4>
@@ -125,7 +125,8 @@
 
                 $scope.config = {
                     tfsCollection: "DefaultCollection",
-                    lifxSelector: "all"
+                    lifxSelector: "all",
+                    lifxActive: false
                 }
 
                 $scope.start = function (config) {
@@ -178,7 +179,7 @@
                         }
                     }
 
-                    if (config.lifxSelector && config.lifxPersonalToken) {
+                    if (config.lifxActive) {
                         options.lightBulbs.push({
                             name: "default bulb",
                             technology: "lifx",
